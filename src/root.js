@@ -35,6 +35,12 @@ function Root(options) {
      * @type {string[]}
      */
     this.files = [];
+
+    /**
+     * Paths of imported files
+     * @type {string[]|null}
+     */
+     this.imports = null;
 }
 
 /**
@@ -127,6 +133,14 @@ Root.prototype.load = function load(filename, options, callback) {
                 var parsed = parse(source, self, options),
                     resolved,
                     i = 0;
+                if (self.imports === null) {
+                    if (parsed.imports)
+                        self.imports = [...parsed.imports];
+                    else
+                        self.imports = []
+                    if (parsed.weakImports)
+                        self.imports = self.imports.concat(parsed.weakImports);
+                }
                 if (parsed.imports)
                     for (; i < parsed.imports.length; ++i)
                         if (resolved = getBundledFileName(parsed.imports[i]) || self.resolvePath(filename, parsed.imports[i]))

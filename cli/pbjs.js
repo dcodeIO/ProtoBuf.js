@@ -41,7 +41,7 @@ exports.main = function main(args, callback) {
             "force-message": "strict-message"
         },
         string: [ "target", "out", "path", "wrap", "dependency", "root", "lint" ],
-        boolean: [ "create", "encode", "decode", "verify", "convert", "delimited", "typeurl", "beautify", "comments", "service", "es6", "sparse", "keep-case", "force-long", "force-number", "force-enum-string", "force-message", "null-defaults" ],
+        boolean: [ "create", "encode", "decode", "verify", "convert", "delimited", "typeurl", "beautify", "comments", "service", "es6", "sparse", "bundle", "keep-case", "force-long", "force-number", "force-enum-string", "force-message", "null-defaults" ],
         default: {
             target: "json",
             create: true,
@@ -55,6 +55,7 @@ exports.main = function main(args, callback) {
             comments: true,
             service: true,
             es6: null,
+            bundle: true,
             lint: lintDefault,
             "keep-case": false,
             "force-long": false,
@@ -99,7 +100,7 @@ exports.main = function main(args, callback) {
                 "",
                 "  -o, --out        Saves to a file instead of writing to stdout.",
                 "",
-                "  --sparse         Exports only those types referenced from a main file (experimental).",
+                "  --sparse         Exports only those types referenced from a main file (experimental). Ignored with --no-bundle.",
                 "",
                 chalk.bold.gray("  Module targets only:"),
                 "",
@@ -144,7 +145,7 @@ exports.main = function main(args, callback) {
                 "",
                 "  --null-defaults  Default value for optional fields is null instead of zero value.",
                 "",
-                "usage: " + chalk.bold.green("pbjs") + " [options] file1.proto file2.json ..." + chalk.gray("  (or pipe)  ") + "other | " + chalk.bold.green("pbjs") + " [options] -",
+                "usage: " + chalk.bold.green("pbjs") + " [options] file1.proto file2.json ..." + chalk.gray("  (or pipe)  ") + "other | " + chalk.bold.green("pbjs") + " [options] - | " + chalk.bold.green("pbjs") + " --no-bundle [options] file.proto",
                 ""
             ].join("\n"));
         return 1;
@@ -235,9 +236,12 @@ exports.main = function main(args, callback) {
 
     // Load from disk
     } else {
+        if (!argv.bundle && files.length > 1) {
+            throw Error("Only one file may be specified with --no-bundle.");
+        }
         try {
             root.loadSync(files, parseOptions).resolveAll(); // sync is deterministic while async is not
-            if (argv.sparse)
+            if (argv.sparse && argv.bundle)
                 sparsify(root);
             callTarget();
         } catch (err) {

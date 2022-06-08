@@ -24,10 +24,11 @@ exports.main = function(args, callback) {
             import: "i"
         },
         string: [ "name", "out", "global", "import" ],
-        boolean: [ "comments", "main" ],
+        boolean: [ "comments", "main", "copy-imports" ],
         default: {
             comments: true,
-            main: false
+            main: false,
+            "copy-imports": false,
         }
     });
 
@@ -89,10 +90,20 @@ exports.main = function(args, callback) {
 
     // Load from disk
     } else {
+        if (!argv.bundle && files.length > 1) {
+            throw Error("Only one file may be specified with --copy-imports.");
+        }
         callJsdoc();
     }
 
     function callJsdoc() {
+        var copiedImports = [];
+
+        if (argv["copy-imports"]) {
+            copiedImports = fs.readFileSync(files[0], "utf-8").split("\n").filter(function(line) {
+                return line.startsWith("import *");
+            });
+        }
 
         // There is no proper API for jsdoc, so this executes the CLI and pipes the output
         var basedir = path.join(__dirname, ".");
@@ -158,9 +169,7 @@ exports.main = function(args, callback) {
                 var importArray = typeof argv.import === "string" ? argv.import.split(",") : argv.import || [];
 
                 // Build an object of imports and paths
-                var imports = {
-                    $protobuf: "protobufjs"
-                };
+                var imports = {};
                 importArray.forEach(function(importItem) {
                     imports[getImportName(importItem)] = importItem;
                 });
@@ -169,6 +178,11 @@ exports.main = function(args, callback) {
                 Object.keys(imports).forEach(function(key) {
                     output.push("import * as " + key + " from \"" + imports[key] + "\";");
                 });
+
+                if (copiedImports) {
+                    output = output.concat(copiedImports);
+                }
+                output.push("");
             }
 
             output = output.join("\n") + "\n" + out.join("");

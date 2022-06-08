@@ -20,8 +20,30 @@ var config = {};
 static_target.description = "Static code without reflection (non-functional on its own)";
 
 function static_target(root, options, callback) {
+    var importInfo = {
+        aliasToModule: {},
+        moduleToAlias: {},
+        exportNames: {},
+    };
     config = options;
     try {
+        if (!config.bundle && root.imports && root.imports.length) {
+            // An import of the form `import * as module from "module"` is needed
+            // for use in the jsdoc comments. But since these imports are only used
+            // for types, the typescript compiler elides them. So an import of
+            // of the form `import "module"` is also included.
+            for (let i of root.imports) {
+                var moduleName = getModuleName(i);
+                assignAlias(moduleName, importInfo);
+                push("import \"" + moduleName + "\";");
+            }
+            push("");
+            for (let i of root.imports) {
+                var moduleName = getModuleName(i);
+                push("import * as " + importInfo.moduleToAlias[moduleName] + " from \"" + moduleName + "\";");
+            }
+            push("");
+        }
         var aliases = [];
         if (config.decode)
             aliases.push("Reader");
@@ -43,7 +65,8 @@ function static_target(root, options, callback) {
         }
         var rootProp = util.safeProp(config.root || "default");
         push((config.es6 ? "const" : "var") + " $root = $protobuf.roots" + rootProp + " || ($protobuf.roots" + rootProp + " = {});");
-        buildNamespace(null, root);
+        var filename = util.path.isAbsolute(config._[0]) ? config._[0] : process.cwd() + '/' + config._[0];
+        buildNamespace(null, root, config.bundle, filename, importInfo);
         return callback(null, out.join("\n"));
     } catch (err) {
         return callback(err);
@@ -52,6 +75,28 @@ function static_target(root, options, callback) {
         indent = 0;
         config = {};
     }
+}
+
+function assignAlias(moduleName, importInfo) {
+    if (importInfo.moduleToAlias[moduleName])
+        return importInfo.moduleToAlias[moduleName];
+
+    let alias = escapeName(moduleName.replace(/^([A-Z])|[\s.\/_-]+(\w)/g, function(match, p1, p2, offset) {
+        if (p2) return p2.toUpperCase();
+        return p1.toLowerCase();
+    }));
+    while (importInfo.aliasToModule[alias])
+        alias += '_';
+    importInfo.moduleToAlias[moduleName] = alias;
+    importInfo.aliasToModule[alias] = moduleName;
+    return alias
+}
+
+function getModuleName(path) {
+    if (path.endsWith(".proto"))
+        return path.slice(0, -".proto".length);
+    else
+        return path;
 }
 
 function push(line) {
@@ -106,47 +151,51 @@ function aOrAn(name) {
         : "a ") + name;
 }
 
-function buildNamespace(ref, ns) {
+function buildNamespace(ref, ns, bundle, filename, importInfo) {
     if (!ns)
         return;
 
     if (ns instanceof Service && !config.service)
         return;
 
+    // With the no-bundle option, only output namespaces that are defined in the
+    // file that's being output
+    if (!bundle && ns.name != '' && (ns.filename === null || (ns.filename && ns.filename !== filename)))
+        return;
+
     if (ns.name !== "") {
+        if (!(ns instanceof Type) && !(ns instanceof Service)) {
+            push("");
+            pushComment([
+                ns.comment || "Namespace " + ns.name + ".",
+                ns.parent instanceof protobuf.Root ? "@exports " + escapeName(ns.name) : "@memberof " + exportName(ns.parent),
+                "@namespace"
+            ]);
+        }
         push("");
         if (!ref && config.es6)
-            push("export const " + escapeName(ns.name) + " = " + escapeName(ref) + "." + escapeName(ns.name) + " = (() => {");
+            push("export const " + escapeName(ns.name) + " = " + escapeName(ref) + "." + escapeName(ns.name) + " = ((" + escapeName(ns.name) + ") => {");
         else
-            push(escapeName(ref) + "." + escapeName(ns.name) + " = (function() {");
+            push(escapeName(ref) + "." + escapeName(ns.name) + " = (function(" + escapeName(ns.name) + ") {");
         ++indent;
     }
 
     if (ns instanceof Type) {
-        buildType(undefined, ns);
+        buildType(undefined, ns, bundle, importInfo);
     } else if (ns instanceof Service)
-        buildService(undefined, ns);
-    else if (ns.name !== "") {
-        push("");
-        pushComment([
-            ns.comment || "Namespace " + ns.name + ".",
-            ns.parent instanceof protobuf.Root ? "@exports " + escapeName(ns.name) : "@memberof " + exportName(ns.parent),
-            "@namespace"
-        ]);
-        push((config.es6 ? "const" : "var") + " " + escapeName(ns.name) + " = {};");
-    }
+        buildService(undefined, ns, bundle, importInfo);
 
     ns.nestedArray.forEach(function(nested) {
         if (nested instanceof Enum)
             buildEnum(ns.name, nested);
         else if (nested instanceof Namespace)
-            buildNamespace(ns.name, nested);
+            buildNamespace(ns.name, nested, bundle, filename, importInfo);
     });
     if (ns.name !== "") {
         push("");
         push("return " + escapeName(ns.name) + ";");
         --indent;
-        push("})();");
+        push("})(" + escapeName(ref) + util.safeProp(escapeName(ns.name)) + " || {});");
     }
 }
 
@@ -311,7 +360,40 @@ function buildFunction(type, functionName, gen, scope) {
         push("};");
 }
 
-function toJsType(field) {
+function getAliasedType(resolvedType, bundle, importInfo) {
+    var type = exportName(resolvedType, !(resolvedType instanceof protobuf.Enum || config.forceMessage));
+    if (!bundle) {
+        var memberModuleName;
+        if (resolvedType.filename === null) {
+            // The set of common types are handled differently than other types
+            // and don't have an associated filename, so we'll just look up
+            // the module name
+            var memberModuleName = {
+                "google.protobuf.Any": "google/protobuf/any",
+                "google.protobuf.Empty": "google/protobuf/empty",
+                "google.protobuf.FieldMask": "google/protobuf/field_mask",
+                "google.protobuf.Struct": "google/protobuf/struct",
+                "google.protobuf.Value": "google/protobuf/struct",
+                "google.protobuf.NullValue": "google/protobuf/struct",
+                "google.protobuf.ListValue": "google/protobuf/struct",
+                "google.protobuf.Timestamp": "google/protobuf/timestamp",
+                "google.protobuf.Wrappers": "google/protobuf/wrappers",
+            }[resolvedType.__exportName];
+        }
+        else
+            memberModuleName = getModuleName(resolvedType.filename);
+
+        for (var moduleName in importInfo.moduleToAlias) {
+            if (memberModuleName && memberModuleName.endsWith(moduleName)) {
+                type = importInfo.moduleToAlias[moduleName] + "." + type;
+                break;
+            }
+        }
+    }
+    return type
+}
+
+function toJsType(field, bundle, importInfo) {
     var type;
 
     switch (field.type) {
@@ -342,7 +424,7 @@ function toJsType(field) {
             break;
         default:
             if (field.resolve().resolvedType)
-                type = exportName(field.resolvedType, !(field.resolvedType instanceof protobuf.Enum || config.forceMessage));
+                type = getAliasedType(field.resolvedType, bundle, importInfo)
             else
                 type = "*"; // should not happen
             break;
@@ -354,7 +436,7 @@ function toJsType(field) {
     return type;
 }
 
-function buildType(ref, type) {
+function buildType(ref, type, bundle, importInfo) {
 
     if (config.comments) {
         var typeDef = [
@@ -365,7 +447,7 @@ function buildType(ref, type) {
         type.fieldsArray.forEach(function(field) {
             var prop = util.safeProp(field.name); // either .name or ["name"]
             prop = prop.substring(1, prop.charAt(0) === "[" ? prop.length - 1 : prop.length);
-            var jsType = toJsType(field);
+            var jsType = toJsType(field, bundle, importInfo);
             if (field.optional)
                 jsType = jsType + "|null";
             typeDef.push("@property {" + jsType + "} " + (field.optional ? "[" + prop + "]" : prop) + " " + (field.comment || type.name + " " + field.name));
@@ -393,7 +475,7 @@ function buildType(ref, type) {
         var prop = util.safeProp(field.name);
         if (config.comments) {
             push("");
-            var jsType = toJsType(field);
+            var jsType = toJsType(field, bundle, importInfo);
             if (field.optional && !field.map && !field.repeated && (field.resolvedType instanceof Type || config["null-defaults"]) || field.partOf)
                 jsType = jsType + "|null|undefined";
             pushComment([
@@ -589,7 +671,6 @@ function buildType(ref, type) {
         --indent;
         push("};");
     }
-
     if (config.typeurl) {
         push("");
         pushComment([
@@ -601,13 +682,13 @@ function buildType(ref, type) {
         ]);
         push(escapeName(type.name) + ".getTypeUrl = function getTypeUrl() {");
         ++indent;
-            push("return \"type.googleapis.com/" + exportName(type) + "\";");
+        push("return \"type.googleapis.com/" + exportName(type) + "\";");
         --indent;
         push("};");
     }
 }
 
-function buildService(ref, service) {
+function buildService(ref, service, bundle, importInfo) {
 
     push("");
     pushComment([
@@ -649,6 +730,9 @@ function buildService(ref, service) {
 
     service.methodsArray.forEach(function(method) {
         method.resolve();
+        var requestType = getAliasedType(method.resolvedRequestType, bundle, importInfo);
+        var responseType = getAliasedType(method.resolvedResponseType, bundle, importInfo);
+
         var lcName = protobuf.util.lcFirst(method.name),
             cbName = escapeName(method.name + "Callback");
         push("");
@@ -659,7 +743,7 @@ function buildService(ref, service) {
             "@typedef " + cbName,
             "@type {function}",
             "@param {Error|null} error Error, if any",
-            "@param {" + exportName(method.resolvedResponseType) + "} [response] " + method.resolvedResponseType.name
+            "@param {" + responseType + "} [response] " + method.resolvedResponseType.name
         ]);
         push("");
         pushComment([
@@ -667,7 +751,7 @@ function buildService(ref, service) {
             "@function " + lcName,
             "@memberof " + exportName(service),
             "@instance",
-            "@param {" + exportName(method.resolvedRequestType, !config.forceMessage) + "} request " + method.resolvedRequestType.name + " message or plain object",
+            "@param {" + requestType + "} request " + method.resolvedRequestType.name + " message or plain object",
             "@param {" + exportName(service) + "." + cbName + "} callback Node-style callback called with the error, if any, and " + method.resolvedResponseType.name,
             "@returns {undefined}",
             "@variation 1"
@@ -684,8 +768,8 @@ function buildService(ref, service) {
             "@function " + lcName,
             "@memberof " + exportName(service),
             "@instance",
-            "@param {" + exportName(method.resolvedRequestType, !config.forceMessage) + "} request " + method.resolvedRequestType.name + " message or plain object",
-            "@returns {Promise<" + exportName(method.resolvedResponseType) + ">} Promise",
+            "@param {" + requestType + "} request " + method.resolvedRequestType.name + " message or plain object",
+            "@returns {Promise<" + responseType + ">} Promise",
             "@variation 2"
         ]);
     });

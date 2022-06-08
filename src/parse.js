@@ -213,7 +213,7 @@ function parse(source, root, options) {
         if (!typeRefRe.test(pkg))
             throw illegal(pkg, "name");
 
-        ptr = ptr.define(pkg);
+        ptr = ptr.define(pkg, null, parse.filename);
         skip(";");
     }
 
