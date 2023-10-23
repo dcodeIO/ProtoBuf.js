@@ -95,13 +95,13 @@ Root.prototype.load = function load(filename, options, callback) {
 
     // Finishes loading by calling the callback (exactly once)
     function finish(err, root) {
+        if (sync)
+            throw err;
         /* istanbul ignore if */
         if (!callback)
             return;
         var cb = callback;
         callback = null;
-        if (sync)
-            throw err;
         cb(err, root);
     }
 

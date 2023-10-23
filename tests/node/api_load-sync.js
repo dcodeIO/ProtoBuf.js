@@ -26,6 +26,10 @@ tape.test("load sync", function(test) {
     }, Error, "should throw when trying to load an invalid proto");
 
     test.throws(function() {
+        protobuf.loadSync("tests/data/indirect-invalid.proto");
+    }, Error, "should throw when trying to load an indirectly invalid proto");
+
+    test.throws(function() {
         protobuf.loadSync("tests/data/invalid.json");
     }, Error, "should throw when trying to load invalid json");
 
