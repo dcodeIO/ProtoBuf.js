@@ -1,6 +1,6 @@
 {
     "tags": {
-        "allowUnknownTags": false
+        "allowUnknownTags": true
     },
     "plugins": [
         "./tsd-jsdoc/plugin"
