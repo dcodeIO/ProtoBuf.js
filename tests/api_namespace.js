@@ -11,6 +11,7 @@ enum Enm {\
 }\
 message Msg {\
     message Enm {}\
+    message Inner {}\
 }\
 service Svc {}";
 
@@ -34,6 +35,10 @@ tape.test("reflected namespaces", function(test) {
     test.ok(ns.lookupType("Msg"), "should lookup types");
 
     test.equal(ns.get("Msg").lookupTypeOrEnum("Enm"), ns.lookup(".ns.Msg.Enm"), "should lookup the nearest type or enum");
+
+    test.throws(function() {
+        ns.lookupType("Inner");
+    }, Error, "should throw when looking up an inner nested type without specifying its path");
 
     test.throws(function() {
         ns.lookupType("Enm");

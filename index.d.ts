@@ -812,9 +812,10 @@ export abstract class NamespaceBase extends ReflectionObject {
      * @param path Path to look up
      * @param filterTypes Filter types, any combination of the constructors of `protobuf.Type`, `protobuf.Enum`, `protobuf.Service` etc.
      * @param [parentAlreadyChecked=false] If known, whether the parent has already been checked
+     * @param [checkNested=false] @deprecated Whether to include nested objects in the lookup (for backwards-compatibility)
      * @returns Looked up object or `null` if none could be found
      */
-    public lookup(path: (string|string[]), filterTypes: (any|any[]), parentAlreadyChecked?: boolean): (ReflectionObject|null);
+    public lookup(path: (string|string[]), filterTypes: (any|any[]), parentAlreadyChecked?: boolean, checkNested?: boolean): (ReflectionObject|null);
 
     /**
      * Looks up the reflection object at the specified path, relative to this namespace.

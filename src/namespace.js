@@ -316,9 +316,10 @@ Namespace.prototype.resolveAll = function resolveAll() {
  * @param {string|string[]} path Path to look up
  * @param {*|Array.<*>} filterTypes Filter types, any combination of the constructors of `protobuf.Type`, `protobuf.Enum`, `protobuf.Service` etc.
  * @param {boolean} [parentAlreadyChecked=false] If known, whether the parent has already been checked
+ * @param {boolean} [checkNested=false] @deprecated Whether to include nested objects in the lookup (for backwards-compatibility)
  * @returns {ReflectionObject|null} Looked up object or `null` if none could be found
  */
-Namespace.prototype.lookup = function lookup(path, filterTypes, parentAlreadyChecked) {
+Namespace.prototype.lookup = function lookup(path, filterTypes, parentAlreadyChecked, checkNested) {
 
     /* istanbul ignore next */
     if (typeof filterTypes === "boolean") {
@@ -326,6 +327,12 @@ Namespace.prototype.lookup = function lookup(path, filterTypes, parentAlreadyChe
         filterTypes = undefined;
     } else if (filterTypes && !Array.isArray(filterTypes))
         filterTypes = [ filterTypes ];
+
+    if (typeof checkNested !== 'boolean')
+        // Note: adding backwards-compatibility support for resolving non-qualified names using nested namespaces,
+        // which goes against the protobuf specification. This will only be supported for lookups originating from
+        // the root namespace now, and fully qualified names should be used instead to avoid ambiguity.
+        checkNested = this === this.root && path[0] !== '.';
 
     if (util.isString(path) && path.length) {
         if (path === ".")
@@ -336,7 +343,7 @@ Namespace.prototype.lookup = function lookup(path, filterTypes, parentAlreadyChe
 
     // Start at root if path is absolute
     if (path[0] === "")
-        return this.root.lookup(path.slice(1), filterTypes);
+        return this.root.lookup(path.slice(1), filterTypes, true, false);
 
     // Test if the first part matches any nested object, and if so, traverse if path contains more
     var found = this.get(path[0]);
@@ -344,19 +351,19 @@ Namespace.prototype.lookup = function lookup(path, filterTypes, parentAlreadyChe
         if (path.length === 1) {
             if (!filterTypes || filterTypes.indexOf(found.constructor) > -1)
                 return found;
-        } else if (found instanceof Namespace && (found = found.lookup(path.slice(1), filterTypes, true)))
+        } else if (found instanceof Namespace && (found = found.lookup(path.slice(1), filterTypes, true, false)))
             return found;
 
     // Otherwise try each nested namespace
-    } else
+    } else if (checkNested)
         for (var i = 0; i < this.nestedArray.length; ++i)
-            if (this._nestedArray[i] instanceof Namespace && (found = this._nestedArray[i].lookup(path, filterTypes, true)))
+            if (this._nestedArray[i] instanceof Namespace && (found = this._nestedArray[i].lookup(path, filterTypes, true, true)))
                 return found;
 
     // If there hasn't been a match, try again at the parent
     if (this.parent === null || parentAlreadyChecked)
         return null;
-    return this.parent.lookup(path, filterTypes);
+    return this.parent.lookup(path, filterTypes, false, false);
 };
 
 /**
