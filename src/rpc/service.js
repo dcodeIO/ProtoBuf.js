@@ -40,9 +40,12 @@ var util = require("../util/minimal");
  * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
  */
 function Service(rpcImpl, requestDelimited, responseDelimited) {
-
-    if (typeof rpcImpl !== "function")
+    
+    if (typeof rpcImpl !== "object" && typeof rpcImpl !== "function") {
         throw TypeError("rpcImpl must be a function");
+    } else if (typeof rpcImpl === "object" && !isRPCV2(rpcImpl)) {
+        throw TypeError("rpcImpl should implement RPCHandler")
+    }
 
     util.EventEmitter.call(this);
 
@@ -65,6 +68,13 @@ function Service(rpcImpl, requestDelimited, responseDelimited) {
     this.responseDelimited = Boolean(responseDelimited);
 }
 
+function isRPCV2(rpcImpl) {
+    return typeof rpcImpl.unaryCall === "function" &&
+    typeof rpcImpl.serverStreamCall === "function" &&
+    typeof rpcImpl.clientStreamCall === "function" &&
+    typeof rpcImpl.bidiStreamCall === "function";
+}
+
 /**
  * Calls a service method through {@link rpc.Service#rpcImpl|rpcImpl}.
  * @param {Method|rpc.ServiceMethod<TReq,TRes>} method Reflected or static method
@@ -77,7 +87,6 @@ function Service(rpcImpl, requestDelimited, responseDelimited) {
  * @template TRes extends Message<TRes>
  */
 Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, request, callback) {
-
     if (!request)
         throw TypeError("request must be specified");
 
@@ -85,13 +94,18 @@ Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, 
     if (!callback)
         return util.asPromise(rpcCall, self, method, requestCtor, responseCtor, request);
 
-    if (!self.rpcImpl) {
+    var rpcUnaryImpl = self.rpcImpl;
+    if (!rpcUnaryImpl) {
         setTimeout(function() { callback(Error("already ended")); }, 0);
         return undefined;
     }
 
+    if (typeof rpcUnaryImpl.unaryCall === "function") {
+        rpcUnaryImpl = rpcUnaryImpl.unaryCall;
+    }
+
     try {
-        return self.rpcImpl(
+        return rpcUnaryImpl(
             method,
             requestCtor[self.requestDelimited ? "encodeDelimited" : "encode"](request).finish(),
             function rpcCallback(err, response) {
@@ -124,6 +138,64 @@ Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, 
         setTimeout(function() { callback(err); }, 0);
         return undefined;
     }
+};
+
+// TODO: docs
+Service.prototype.serverStreamCall = function serverStreamCall(method, requestCtor, responseCtor, request) {
+    if (!request)
+        throw TypeError("request must be specified");
+
+    var self = this;
+
+    if (typeof self.rpcImpl.serverStreamCall !== "function") {
+        throw new Error("rpcImpl should implement serverStreamCall to support server streaming");
+    }
+
+    return self.rpcImpl.serverStreamCall(
+        method,
+        requestCtor[self.requestDelimited ? "encodeDelimited" : "encode"](request).finish(),
+        function responseFn (response) {
+            return responseCtor[self.responseDelimited ? "decodeDelimited" : "decode"](response);
+        }
+    );
+};
+
+// TODO: docs
+Service.prototype.clientStreamCall = function clientStreamCall(method, requestCtor, responseCtor) {
+    var self = this;
+
+    if (typeof self.rpcImpl.clientStreamCall !== "function") {
+        throw new Error("rpcImpl should implement clientStreamCall to support client streaming");
+    }
+
+    return self.rpcImpl.clientStreamCall(
+        method,
+        function encodeFn (request) {
+            return requestCtor[self.requestDelimited ? "encodeDelimited" : "encode"](request).finish()
+        },
+        function decodeFn (response) {
+            return responseCtor[self.responseDelimited ? "decodeDelimited" : "decode"](response);
+        }
+    );
+};
+
+// TODO: docs
+Service.prototype.bidiStreamCall = function bidiStreamCall(method, requestCtor, responseCtor) {
+    var self = this;
+
+    if (typeof self.rpcImpl.bidiStreamCall !== "function") {
+        throw new Error("rpcImpl should implement bidiStreamCall to support bidi streaming");
+    }
+
+    return self.rpcImpl.bidiStreamCall(
+        method,
+        function encodeFn (request) {
+            return requestCtor[self.requestDelimited ? "encodeDelimited" : "encode"](request).finish()
+        },
+        function decodeFn (response) {
+            return responseCtor[self.responseDelimited ? "decodeDelimited" : "decode"](response);
+        }
+    );
 };
 
 /**
