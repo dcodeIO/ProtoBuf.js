@@ -52,3 +52,9 @@ if (diff) {
     process.exitCode = 1;
 } else
     console.log("no differences");
+
+// This test was able to reproduce https://github.com/dcodeIO/protobuf.js/issues/1196
+var msgDefaults = descriptor.FileDescriptorSet.toObject(msg, {defaults: true}); 
+buf = descriptor.FileDescriptorSet.encode(msgDefaults).finish();
+protobuf.Root.fromDescriptor(buf, "proto2").resolveAll();
+console.log("cycle with defaults successful");

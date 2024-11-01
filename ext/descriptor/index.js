@@ -215,7 +215,7 @@ Type.fromDescriptor = function fromDescriptor(descriptor, syntax) {
         for (i = 0; i < descriptor.field.length; ++i) {
             var field = Field.fromDescriptor(descriptor.field[i], syntax);
             type.add(field);
-            if (descriptor.field[i].hasOwnProperty("oneofIndex")) // eslint-disable-line no-prototype-builtins
+            if (descriptor.field[i].oneofIndex)
                 type.oneofsArray[descriptor.field[i].oneofIndex].add(field);
         }
     /* Extension fields */ if (descriptor.extension)
