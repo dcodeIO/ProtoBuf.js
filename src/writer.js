@@ -443,18 +443,20 @@ Writer.prototype.ldelim = function ldelim() {
 
 /**
  * Finishes the write operation.
+ * @param {Uint8Array} [buf] Optional buffer that's 'this.len' bytes long
  * @returns {Uint8Array} Finished buffer
  */
-Writer.prototype.finish = function finish() {
+Writer.prototype.finish = function finish(buf) {
+    if (buf == null) {
+      buf = this.constructor.alloc(this.len);
+    }
     var head = this.head.next, // skip noop
-        buf  = this.constructor.alloc(this.len),
         pos  = 0;
     while (head) {
         head.fn(head.val, buf, pos);
         pos += head.len;
         head = head.next;
     }
-    // this.head = this.tail = null;
     return buf;
 };
 
