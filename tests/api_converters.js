@@ -123,6 +123,7 @@ tape.test("converters", function(test) {
 
                 test.equal(Object.prototype.toString.call(Message.toObject(msg, { bytes: Array }).bytesVal), "[object Array]", "bytes to arrays");
                 test.equal(Message.toObject(msg, { bytes: String }).bytesVal, "MTEx", "bytes to base64 strings");
+                test.equal(Message.toObject(msg, { bytes: 'utf8' }).bytesVal, "111", "bytes to utf8 strings");
                 if (protobuf.util.isNode)
                     test.ok(Buffer.isBuffer(Message.toObject(msg, { bytes: Buffer }).bytesVal), "bytes to buffers");
 
