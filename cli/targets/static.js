@@ -795,6 +795,10 @@ function buildService(ref, service) {
         ]);
         push("Object.defineProperty(" + escapeName(service.name) + ".prototype" + util.safeProp(lcName) + " = function " + escapeName(lcName) + "(request, callback) {");
             ++indent;
+            push(escapeName(lcName) + ".requestStream = " + method.requestStream + ";");
+            push(escapeName(lcName) + ".responseStream = " + method.responseStream + ";");
+            push(escapeName(lcName) + ".resolvedRequestType = $root." + exportName(method.resolvedRequestType) + ";");
+            push(escapeName(lcName) + ".resolvedResponseType = $root." + exportName(method.resolvedResponseType) + ";");
             push("return this.rpcCall(" + escapeName(lcName) + ", $root." + exportName(method.resolvedRequestType) + ", $root." + exportName(method.resolvedResponseType) + ", request, callback);");
             --indent;
         push("}, \"name\", { value: " + JSON.stringify(method.name) + " });");
