@@ -11,7 +11,8 @@ var roots = require("./roots");
 var Type, // cyclic
     Enum;
 
-util.codegen = require("@protobufjs/codegen");
+//util.codegen = require("@protobufjs/codegen");
+util.codegen = require("../lib/codegen");
 util.fetch   = require("@protobufjs/fetch");
 util.path    = require("@protobufjs/path");
 
@@ -68,13 +69,22 @@ util.isReserved = function isReserved(name) {
 };
 
 /**
+ * Returns a safe property name as a string, e.g. safePropString("x") -> "'x'"
+ * @param {string} prop Property name
+ * @returns {string} Safe accessor
+ */
+ util.safePropString = function safePropString(prop) {
+    return "\"" + prop.replace(safePropBackslashRe, "\\\\").replace(safePropQuoteRe, "\\\"") + "\"";
+};
+
+/**
  * Returns a safe property accessor for the specified property name.
  * @param {string} prop Property name
  * @returns {string} Safe accessor
  */
 util.safeProp = function safeProp(prop) {
     if (!/^[$\w_]+$/.test(prop) || util.isReserved(prop))
-        return "[\"" + prop.replace(safePropBackslashRe, "\\\\").replace(safePropQuoteRe, "\\\"") + "\"]";
+        return "[" + safePropString(prop) + "]";
     return "." + prop;
 };
 
