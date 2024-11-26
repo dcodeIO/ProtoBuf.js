@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package test;
+
+message TestUnordered {
+    int32 field_a = 1;
+    int32 field_b = 3;
+    int32 field_c = 2;
+}

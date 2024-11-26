@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+
+package test;
+
+enum ProtobufJsFieldOrder {
+  ORDERED = 0;
+  ORIGINAL = 1;
+}
+
+extend google.protobuf.FileOptions {
+  ProtobufJsFieldOrder pbjs_encoder_field_order = 50001;
+}
+
+option (pbjs_encoder_field_order) = ORIGINAL;
+
+message TestUnordered {
+    int32 field_a = 1;
+    int32 field_b = 3;
+    int32 field_c = 2;
+}

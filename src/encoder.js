@@ -33,8 +33,28 @@ function encoder(mtype) {
 
     var i, ref;
 
-    // "when a message is serialized its known fields should be written sequentially by field number"
+    /* From https://developers.google.com/protocol-buffers/docs/encoding :
+
+        "When a message is serialized, there is no guaranteed order for how its known or unknown
+        fields should be written. Serialization order is an implementation detail and the details
+        of any particular implementation may change in the future. Therefore, protocol buffer
+        parsers must be able to parse fields in any order."
+
+      However the same documentation used to say:
+
+        "when a message is serialized its known fields should be written sequentially by field number"
+
+      Which used to be the only way protobuf.js serialised fields.
+      We still use this as the default serialisation method, but provide a way to configure serialisation
+      order via an option in a proto file.
+    */
+    var fieldOrderMethod = util.getOption(mtype, "(pbjs_encoder_field_order)");
+
     var fields = /* initializes */ mtype.fieldsArray.slice().sort(util.compareFieldsById);
+
+    if (fieldOrderMethod === "ORIGINAL") {
+        fields = mtype.fieldsArray.slice();
+    }
 
     for (var i = 0; i < fields.length; ++i) {
         var field    = fields[i].resolve(),

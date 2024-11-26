@@ -211,3 +211,16 @@ Object.defineProperty(util, "decorateRoot", {
         return roots["decorated"] || (roots["decorated"] = new (require("./root"))());
     }
 });
+
+/**
+ * Get property from a type.
+ * @param {Type} obj type object to get the option for
+ * @param {string} name name of the option
+ * @returns {string|number} value of the option
+ */
+util.getOption = function getOption(obj, name) {
+    if (obj == null) return undefined;
+    var objectOptions = obj.options || {};
+    var parentOptions = obj.parent != null ? obj.parent.options || {} : {};
+    return objectOptions[name] || objectOptions["(" + name + ")"] || parentOptions[name] || parentOptions["(" + name + ")"];
+};

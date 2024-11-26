@@ -264,6 +264,37 @@ protobuf.load("awesome.proto")
     });
 ```
 
+#### Controlling field order during encoding
+
+By default the `encode` method will ensure that all fields are encoded in the order of their IDs. It is possible to tell the encoder to use the order defined in the .proto file by specifying a custom Protobuf.js option:
+
+```protobuf
+// awesome.proto
+package awesomepackage;
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+
+enum ProtobufJsFieldOrder {
+  ORDERED = 0;
+  ORIGINAL = 1;
+}
+
+extend google.protobuf.FileOptions {
+  ProtobufJsFieldOrder pbjs_encoder_field_order = 50001;
+}
+
+// make sure the `out_of_order_field` is encoded
+// first, even though its ID is higher than the ID
+// of `awesome_field`.
+option (pbjs_encoder_field_order) = ORIGINAL;
+
+message AwesomeMessage {
+    string out_of_order_field = 2;
+    string awesome_field = 1;
+}
+```
+
 ### Using JSON descriptors
 
 The library utilizes JSON descriptors that are equivalent to a .proto definition. For example, the following is identical to the .proto definition seen above:
