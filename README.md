@@ -481,7 +481,7 @@ The npm package depends on [@types/node](https://www.npmjs.com/package/@types/no
 
 #### Using the JS API
 
-The API shown above works pretty much the same with TypeScript. However, because everything is typed, accessing fields on instances of dynamically generated message classes requires either using bracket-notation (i.e. `message["awesomeField"]`) or explicit casts. Alternatively, it is possible to use a [typings file generated for its static counterpart](#pbts-for-typescript).
+The API shown above works pretty much the same with TypeScript. However, because everything is typed, accessing fields on instances of dynamically generated message classes requires either using bracket-notation (i.e. `message["awesomeField"]`) or explicit casts. Alternatively, it is possible to use a [typings file generated for its static counterpart](./cli/README.md#pbts-for-typescript).
 
 ```ts
 import { load } from "protobufjs"; // respectively "./node_modules/protobufjs"
