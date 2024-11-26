@@ -113,13 +113,6 @@ util.isSet = function isSet(obj, prop) {
 };
 
 /**
- * Any compatible Buffer instance.
- * This is a minimal stand-alone definition of a Buffer instance. The actual type is that exported by node's typings.
- * @interface Buffer
- * @extends Uint8Array
- */
-
-/**
  * Node's Buffer class if available.
  * @type {Constructor<Buffer>}
  */
