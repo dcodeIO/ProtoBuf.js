@@ -608,7 +608,7 @@ function buildType(ref, type) {
             ]);
             push(escapeName(type.name) + ".encodeDelimited = function encodeDelimited(message, writer) {");
             ++indent;
-            push("return this.encode(message, writer).ldelim();");
+            push("return this.encode(message, writer && writer.len ? writer.fork() : writer).ldelim();");
             --indent;
             push("};");
         }
