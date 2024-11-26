@@ -495,6 +495,9 @@ function parse(source, root, options) {
                 case "repeated":
                     parseField(type, token);
                     break;
+                case "reserved":
+                    readRanges(type.reserved || (type.reserved = []), true);
+                    break;
 
                 case "optional":
                     /* istanbul ignore if */
