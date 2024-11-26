@@ -117,6 +117,18 @@ Message.fromObject = function fromObject(object) {
 };
 
 /**
+ * Returns whether one Message's fields have values equal to those of another Message
+ * @param {T} b Message instance
+ * @returns {Boolean}
+ * @template T extends Message<T>
+ * @this Constructor<T>
+ */
+Message.prototype.equals = function equals(b) {
+    return this.$type == b.$type &&
+        this.$type.fieldsArray.every(f => this[f.name] == b[f.name]);
+};
+
+/**
  * Creates a plain object from a message of this type. Also converts values to other types if specified.
  * @param {T} message Message instance
  * @param {IConversionOptions} [options] Conversion options
