@@ -659,6 +659,8 @@ function handleFunction(element, parent, isConstructor) {
             write(element.access || "public", " ");
             if (element.scope === "static")
                 write("static ");
+            else if (element.virtual)
+                write("abstract ");
         } else
             write("function ");
         write(element.name);
