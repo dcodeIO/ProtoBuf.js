@@ -112,8 +112,8 @@ LongBits.prototype.toNumber = function toNumber(unsigned) {
  * @returns {Long} Long
  */
 LongBits.prototype.toLong = function toLong(unsigned) {
-    return util.Long
-        ? new util.Long(this.lo | 0, this.hi | 0, Boolean(unsigned))
+    return (util.Long && util.Long.default)
+        ? new util.Long.default(this.lo | 0, this.hi | 0, Boolean(unsigned))
         /* istanbul ignore next */
         : { low: this.lo | 0, high: this.hi | 0, unsigned: Boolean(unsigned) };
 };
