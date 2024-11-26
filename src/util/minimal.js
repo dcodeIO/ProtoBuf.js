@@ -412,7 +412,8 @@ util.toJSONOptions = {
     longs: String,
     enums: String,
     bytes: String,
-    json: true
+    json: true,
+    standard: false
 };
 
 // Sets up buffer utility according to the environment (called in index-minimal)

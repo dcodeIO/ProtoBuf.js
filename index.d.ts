@@ -1763,6 +1763,9 @@ export interface IConversionOptions {
 
     /** Performs additional JSON compatibility conversions, i.e. NaN and Infinity to strings */
     json?: boolean;
+
+    /** Performs additional protobuf JSON mapping compatibility conversions */
+    standard?: boolean;
 }
 
 /**
