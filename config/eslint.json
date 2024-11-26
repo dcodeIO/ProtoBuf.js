@@ -10,6 +10,7 @@
         "Float64Array": true,
         "define": true,
         "global": true,
+        "globalThis": false,
         "XMLHttpRequest": true,
         "Promise": true
     },

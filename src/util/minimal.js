@@ -44,6 +44,7 @@ util.isNode = Boolean(typeof global !== "undefined"
 util.global = util.isNode && global
            || typeof window !== "undefined" && window
            || typeof self   !== "undefined" && self
+           || globalThis
            || this; // eslint-disable-line no-invalid-this
 
 /**
