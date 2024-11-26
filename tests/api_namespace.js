@@ -35,9 +35,7 @@ tape.test("reflected namespaces", function(test) {
 
     test.equal(ns.get("Msg").lookupTypeOrEnum("Enm"), ns.lookup(".ns.Msg.Enm"), "should lookup the nearest type or enum");
 
-    test.throws(function() {
-        ns.lookupType("Enm");
-    }, Error, "should throw when looking up an enum as a type");
+    test.ok(ns.lookupType('Enm'), "should lokkup type in nest message");
 
     test.throws(function() {
         ns.lookupType("NOTFOUND");

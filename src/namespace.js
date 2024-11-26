@@ -348,10 +348,10 @@ Namespace.prototype.lookup = function lookup(path, filterTypes, parentAlreadyChe
             return found;
 
     // Otherwise try each nested namespace
-    } else
-        for (var i = 0; i < this.nestedArray.length; ++i)
-            if (this._nestedArray[i] instanceof Namespace && (found = this._nestedArray[i].lookup(path, filterTypes, true)))
-                return found;
+    }
+    for (var i = 0; i < this.nestedArray.length; ++i)
+        if (this._nestedArray[i] instanceof Namespace && (found = this._nestedArray[i].lookup(path, filterTypes, true)))
+            return found;
 
     // If there hasn't been a match, try again at the parent
     if (this.parent === null || parentAlreadyChecked)
