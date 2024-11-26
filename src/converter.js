@@ -61,11 +61,11 @@ function genValuePartial_fromObject(gen, field, fieldIndex, prop) {
                 ("m%s=d%s|0", prop, prop);
                 break;
             case "uint64":
+            case "fixed64":
                 isUnsigned = true;
                 // eslint-disable-next-line no-fallthrough
             case "int64":
             case "sint64":
-            case "fixed64":
             case "sfixed64": gen
                 ("if(util.Long)")
                     ("(m%s=util.Long.fromValue(d%s)).unsigned=%j", prop, prop, isUnsigned)
