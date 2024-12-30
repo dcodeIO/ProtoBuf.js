@@ -85,7 +85,7 @@
     "jsdoc": "^4.0.0",
     "minimist": "^1.2.0",
     "nyc": "^15.0.0",
-    "reflect-metadata": "^0.1.13",
+    "reflect-metadata": "^0.2.0",
     "tape": "^5.0.0",
     "tslint": "^6.0.0",
     "typescript": "^3.7.5",
