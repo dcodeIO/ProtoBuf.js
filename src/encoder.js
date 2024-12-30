@@ -45,10 +45,26 @@ function encoder(mtype) {
 
         // Map fields
         if (field.map) {
+            let keyGetter;
+            switch (field.keyType) {
+                case "int64":
+                case "uint64":
+                case "sint64":
+                case "fixed64":
+                case "sfixed64":
+                    keyGetter = "$util.longFromHash(ks[i], false)";
+                    break;
+                case "bool":
+                    keyGetter = "ks[i] === \"true\"";
+                    break;
+                default:
+                    keyGetter = "ks[i]";
+                    break;
+            }
             gen
     ("if(%s!=null&&Object.hasOwnProperty.call(m,%j)){", ref, field.name) // !== undefined && !== null
         ("for(var ks=Object.keys(%s),i=0;i<ks.length;++i){", ref)
-            ("w.uint32(%i).fork().uint32(%i).%s(ks[i])", (field.id << 3 | 2) >>> 0, 8 | types.mapKey[field.keyType], field.keyType);
+            ("w.uint32(%i).fork().uint32(%i).%s(%s)", (field.id << 3 | 2) >>> 0, 8 | types.mapKey[field.keyType], field.keyType, keyGetter);
             if (wireType === undefined) gen
             ("types[%i].encode(%s[ks[i]],w.uint32(18).fork()).ldelim().ldelim()", index, ref); // can't be groups
             else gen
