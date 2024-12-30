@@ -91,7 +91,7 @@
     "typescript": "^3.7.5",
     "uglify-js": "^3.7.7",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-fs": "^3.0.3",
+    "vinyl-fs": "^4.0.0",
     "vinyl-source-stream": "^2.0.0"
   },
   "files": [
