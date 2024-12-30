@@ -69,7 +69,7 @@
     "bundle-collapser": "^1.3.0",
     "chalk": "^4.0.0",
     "escodegen": "^1.13.0",
-    "eslint": "^8.15.0",
+    "eslint": "^9.0.0",
     "espree": "^9.0.0",
     "estraverse": "^5.1.0",
     "gh-pages": "^4.0.0",
