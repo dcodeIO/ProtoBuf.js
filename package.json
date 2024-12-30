@@ -70,7 +70,7 @@
     "chalk": "^4.0.0",
     "escodegen": "^1.13.0",
     "eslint": "^8.15.0",
-    "espree": "^9.0.0",
+    "espree": "^10.0.0",
     "estraverse": "^5.1.0",
     "gh-pages": "^4.0.0",
     "git-raw-commits": "^2.0.3",
