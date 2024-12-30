@@ -74,7 +74,7 @@
     "estraverse": "^5.1.0",
     "gh-pages": "^4.0.0",
     "git-raw-commits": "^2.0.3",
-    "git-semver-tags": "^4.0.0",
+    "git-semver-tags": "^8.0.0",
     "google-protobuf": "^3.11.3",
     "gulp": "^4.0.2",
     "gulp-header": "^2.0.9",
