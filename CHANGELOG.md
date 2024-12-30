@@ -1,5 +1,21 @@
 # Changelog
 
+## [7.5.0](https://github.com/protobufjs/protobuf.js/compare/protobufjs-v7.4.0...protobufjs-v7.5.0) (2024-12-30)
+
+
+### Features
+
+* add feature resolution ([a9ffc8a](https://github.com/protobufjs/protobuf.js/commit/a9ffc8a7b593209642fc9d89e884ac6c4e746494))
+* add feature resolution and tests ([68b5339](https://github.com/protobufjs/protobuf.js/commit/68b5339ea1936c90f526983da29b4267d20f9a51))
+* add feature resolution for protobuf editions ([65d3ed1](https://github.com/protobufjs/protobuf.js/commit/65d3ed15e3c3ffd41b488aaa2eb8aa53026419b9))
+* api_converters_editions tests added and run successfully" ([b4b5ca4](https://github.com/protobufjs/protobuf.js/commit/b4b5ca468fcde2082d65a72b508f18d07d75245c))
+
+
+### Bug Fixes
+
+* change tree traversal order and feature resolution algorithm ([d2d47d9](https://github.com/protobufjs/protobuf.js/commit/d2d47d9e4fbe754d3f83fd2608d93ef0daa43658))
+* remove eval usage so that chrome extension MV3 can run properly ([#1941](https://github.com/protobufjs/protobuf.js/issues/1941)) ([f2ccb99](https://github.com/protobufjs/protobuf.js/commit/f2ccb999220ee596d68c80b36265e5ee4ec877b3))
+
 ## [7.4.0](https://github.com/protobufjs/protobuf.js/compare/protobufjs-v7.3.3...protobufjs-v7.4.0) (2024-08-22)
 
 
