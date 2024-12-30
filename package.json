@@ -88,7 +88,7 @@
     "reflect-metadata": "^0.1.13",
     "tape": "^5.0.0",
     "tslint": "^6.0.0",
-    "typescript": "^3.7.5",
+    "typescript": "^5.0.0",
     "uglify-js": "^3.7.7",
     "vinyl-buffer": "^1.0.1",
     "vinyl-fs": "^3.0.3",
