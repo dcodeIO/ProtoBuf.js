@@ -274,6 +274,7 @@ function tokenize(source, alternateCommentMode) {
                                     break;
                                 }
                                 offset++;
+                                line++;
                                 if (!isLeadingComment) {
                                     // Trailing comment cannot not be multi-line
                                     break;
@@ -281,12 +282,12 @@ function tokenize(source, alternateCommentMode) {
                             } while (isDoubleSlashCommentLine(offset));
                         } else {
                             offset = Math.min(length, findEndOfLine(offset) + 1);
+                            line++;
                         }
                         if (isDoc) {
                             setComment(start, offset, isLeadingComment);
                             isLeadingComment = true;
                         }
-                        line++;
                         repeat = true;
                     }
                 } else if ((curr = charAt(offset)) === "*") { /* Block */
