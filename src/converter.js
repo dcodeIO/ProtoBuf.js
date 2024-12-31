@@ -132,7 +132,7 @@ converter.fromObject = function fromObject(mtype) {
     ("if(d%s){", prop)
         ("if(!Array.isArray(d%s))", prop)
             ("throw TypeError(%j)", field.fullName + ": array expected")
-        ("m%s=[]", prop)
+        ("m%s=Array(d%s.length)", prop, prop)
         ("for(var i=0;i<d%s.length;++i){", prop);
             genValuePartial_fromObject(gen, field, /* not sorted */ i, prop + "[i]")
         ("}")
@@ -281,7 +281,7 @@ converter.toObject = function toObject(mtype) {
         ("}");
         } else if (field.repeated) { gen
     ("if(m%s&&m%s.length){", prop, prop)
-        ("d%s=[]", prop)
+        ("d%s=Array(m%s.length)", prop, prop)
         ("for(var j=0;j<m%s.length;++j){", prop);
             genValuePartial_toObject(gen, field, /* sorted */ index, prop + "[j]")
         ("}");
