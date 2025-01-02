@@ -24,9 +24,12 @@ function genVerifyValue(gen, field, fieldIndex, ref) {
             ("switch(%s){", ref)
                 ("default:")
                     ("return%j", invalid(field, "enum value"));
-            for (var keys = Object.keys(field.resolvedType.values), j = 0; j < keys.length; ++j) gen
-                ("case %i:", field.resolvedType.values[keys[j]]);
-            gen
+            for (var keys = Object.keys(field.resolvedType.values), j = 0; j < keys.length; ++j) {
+                gen
+                    ("case %i:", field.resolvedType.values[keys[j]])
+                    ("case %j:", keys[j]);
+                }
+                gen
                     ("break")
             ("}");
         } else {
