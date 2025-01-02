@@ -708,13 +708,18 @@ function parse(source, root, options) {
                     value = [];
                     var lastValue;
                     if (skip("[", true)) {
-                        do {
-                            lastValue = readValue(true);
-                            value.push(lastValue);
-                        } while (skip(",", true));
-                        skip("]");
-                        if (typeof lastValue !== "undefined") {
-                            setOption(parent, name + "." + token, lastValue);
+                        if (peek() === "]") {
+                            setOption(parent, name, "." + token, []);
+                            next();
+                        } else {
+                            do {
+                                lastValue = readValue(true);
+                                value.push(lastValue);
+                            } while (skip(",", true));
+                            skip("]");
+                            if (typeof lastValue !== "undefined") {
+                                setOption(parent, name + "." + token, lastValue);
+                            }
                         }
                     }
                 } else {

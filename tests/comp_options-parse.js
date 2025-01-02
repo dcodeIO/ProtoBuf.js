@@ -134,6 +134,7 @@ tape.test("Options", function (test) {
             {
                 "(method_rep_msg)": {
                     value: 1,
+                    empty_repeated: [],
                     nested: {nested: {value: "x"}},
                     rep_nested: [{value: "y"}, {value: "z"}],
                     rep_value: 3
