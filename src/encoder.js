@@ -26,15 +26,15 @@ function genTypePartial(gen, field, fieldIndex, ref) {
  * @returns {Codegen} Codegen instance
  */
 function encoder(mtype) {
+    // "when a message is serialized its known fields should be written sequentially by field number"
+    var fields = /* initializes */ mtype.fieldsArray.slice().sort(util.compareFieldsById);
+
     /* eslint-disable no-unexpected-multiline, block-scoped-var, no-redeclare */
-    var gen = util.codegen(["m", "w"], mtype.name + "$encode")
+    var gen = util.codegen([fields.length ? "m" : "_m", "w"], mtype.name + "$encode")
     ("if(!w)")
         ("w=Writer.create()");
 
     var i, ref;
-
-    // "when a message is serialized its known fields should be written sequentially by field number"
-    var fields = /* initializes */ mtype.fieldsArray.slice().sort(util.compareFieldsById);
 
     for (var i = 0; i < fields.length; ++i) {
         var field    = fields[i].resolve(),

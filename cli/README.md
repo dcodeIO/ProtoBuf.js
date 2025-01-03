@@ -24,6 +24,7 @@ Translates between file formats and generates static code.
                    proto3        Protocol Buffers, Version 3
                    static        Static code without reflection (non-functional on its own)
                    static-module Static code without reflection as a module
+                   typescript    TypeScript module without reflection
 
   -p, --path       Adds a directory to the include path.
 
@@ -53,7 +54,7 @@ Translates between file formats and generates static code.
 
   --keep-case      Keeps field casing instead of converting to camel case.
 
-  Static targets only:
+  Static and TypeScript targets only:
 
   --no-create      Does not generate create functions used for reflection compatibility.
   --no-encode      Does not generate encode functions.
