@@ -54,11 +54,14 @@ BufferWriter.prototype.bytes = function write_bytes_buffer(value) {
     return this;
 };
 
+const isOlderVer = compareVersions(process.version.slice(1), targetVersion) < 0 ? true : false;
+
 function writeStringBuffer(val, buf, pos) {
+    const targetVersion = '22.7.0';
     if (val.length < 40) // plain js is faster for short strings (probably due to redundant assertions)
         util.utf8.write(val, buf, pos);
-    else if (buf.utf8Write)
-        buf.utf8Write(val, pos);
+    else if (isOlderVer && buf.utf8Write)
+        buf.utf8Write(val, pos); // node less than 22.7.0
     else
         buf.write(val, pos);
 }
@@ -83,3 +86,14 @@ BufferWriter.prototype.string = function write_string_buffer(value) {
  */
 
 BufferWriter._configure();
+
+function compareVersions(version1, version2) {
+  const v1Parts = version1.split('.').map(Number);
+  const v2Parts = version2.split('.').map(Number);
+
+  for (let i = 0; i < Math.max(v1Parts.length, v2Parts.length); i+=1) {
+    if ((v1Parts[i] || 0) < (v2Parts[i] || 0)) { return -1 }
+    if ((v1Parts[i] || 0) > (v2Parts[i] || 0)) { return 1 }
+  }
+  return 0;
+}
