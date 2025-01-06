@@ -251,7 +251,7 @@ function buildFunction(type, functionName, gen, scope) {
             )
                 return {
                     "type": "Identifier",
-                    "name": "$root" + type.fullName
+                    "name": "$root." + exportName(type)
                 };
             // replace types[N] with the field's actual type
             if (
