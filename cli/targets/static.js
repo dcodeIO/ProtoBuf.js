@@ -36,7 +36,7 @@ function static_target(root, options, callback) {
         }
         if (config.comments) {
             if (root.comment) {
-                pushComment("@fileoverview " + root.comment);
+                pushComment(["@fileoverview " + root.comment]);
                 push("");
             }
             push("// Exported root namespace");
