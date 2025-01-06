@@ -6,7 +6,8 @@
 var converter = exports;
 
 var Enum = require("./enum"),
-    util = require("./util");
+    util = require("./util"),
+    wrappers = require("./wrappers");
 
 /**
  * Generates a partial value fromObject conveter.
@@ -40,7 +41,9 @@ function genValuePartial_fromObject(gen, field, fieldIndex, prop) {
                     ("break");
             } gen
             ("}");
-        } else gen
+        } else if (wrappers[field.resolvedType.fullName]) gen
+            ("m%s=types[%i].fromObject(d%s)", prop, fieldIndex, prop);
+          else gen
             ("if(typeof d%s!==\"object\")", prop)
                 ("throw TypeError(%j)", field.fullName + ": object expected")
             ("m%s=types[%i].fromObject(d%s)", prop, fieldIndex, prop);
