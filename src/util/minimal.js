@@ -436,3 +436,13 @@ util._configure = function() {
             return new Buffer(size);
         };
 };
+
+/**
+ * Tests if the specified value is an unsigned number.
+ * @function
+ * @param {*} value Value to test
+ * @returns {boolean} `true` if the value is an unsigned number
+ */
+util.isUnsignedNumber  = function(value){
+    return util.isInteger(value) && value >= 0
+}
