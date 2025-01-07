@@ -92,8 +92,16 @@ Reader.prototype.uint32 = (function read_uint32_setup() {
         value = (value | (this.buf[this.pos] & 127) << 21) >>> 0; if (this.buf[this.pos++] < 128) return value;
         value = (value | (this.buf[this.pos] &  15) << 28) >>> 0; if (this.buf[this.pos++] < 128) return value;
 
+        if (this.buf[this.pos++] >= 128
+                && this.buf[this.pos++] >= 128
+                && this.buf[this.pos++] >= 128
+                && this.buf[this.pos++] >= 128
+                && this.buf[this.pos++] >= 128) {
+            throw Error("varint too long");
+        }
+
         /* istanbul ignore if */
-        if ((this.pos += 5) > this.len) {
+        if (this.pos > this.len) {
             this.pos = this.len;
             throw indexOutOfRange(this, 10);
         }
