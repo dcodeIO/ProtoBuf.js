@@ -522,6 +522,15 @@ Type.prototype.decodeDelimited = function decodeDelimited(reader) {
 };
 
 /**
+ * Removes unknown fields that have been deserialized into the message
+ * @param {Message<{}>|Object.<string,*>} message Message instance or plain object
+ * @returns {Message<{}>|Object.<string,*>} message with unknown fields stripped
+ */
+Type.prototype.discardUnknownFields = function discardUnknownFields(message) {
+    delete message["__unknownFields"];
+};
+
+/**
  * Verifies that field values are valid and that required fields are present.
  * @param {Object.<string,*>} message Plain object to verify
  * @returns {null|string} `null` if valid, otherwise the reason why it is not

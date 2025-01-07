@@ -109,7 +109,8 @@ function decoder(mtype) {
         // Unknown fields
     } gen
             ("default:")
-                ("r.skipType(t&7)")
+                ("Object.defineProperty(m,\"__unknownFields\",{writable:true,configurable:true,enumerable:false })")
+                ("m[\"__unknownFields\"]=r.rawBytes(t,m[\"__unknownFields\"])")
                 ("break")
 
         ("}")
