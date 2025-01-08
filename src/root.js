@@ -118,6 +118,10 @@ Root.prototype.load = function load(filename, options, callback) {
             var altname = filename.substring(idx);
             if (altname in common) return altname;
         }
+        // Allow unresolved (namespace only) files to be added to common (not only google/protobuf)
+        if (filename in common) {
+            return filename;
+        }
         return null;
     }
 
