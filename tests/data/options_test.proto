@@ -78,9 +78,19 @@ message TestMessageOptionsMsg {
         value: 5
         rep_value: [ 7, 8 ]
     };
+    option (mo_rep_msg) = {
+        rep_value: [ ]
+    };
     option (mo_single_msg).value = 7;
     option (mo_single_msg).rep_value = 8;
     option (mo_single_msg).rep_value = 9;
+}
+
+message TestMessageOptionsEmpty {
+    option (mo_rep_msg) = {
+        value: 1
+        rep_value: [ ]
+    };
 }
 
 message TestFieldOptionsNested {

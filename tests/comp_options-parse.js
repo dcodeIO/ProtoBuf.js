@@ -45,8 +45,18 @@ tape.test("Options", function (test) {
             {"(mo_rep_msg)": {value: 1, rep_value: [2, 3]}},
             {"(mo_rep_msg)": {value: 4, rep_value: [5, 6]}},
             {"(mo_rep_msg)": {value: 5, rep_value: [7, 8]}},
+            {"(mo_rep_msg)": {rep_value: []}},
             {"(mo_single_msg)": {value: 7, rep_value: [8, 9]}},
         ], "should take all message options");
+        test.end();
+    });
+
+    test.test(test.name + " - message options (Empty)", function (test) {
+        var TestMessageOptionsMsg = root.lookup("TestMessageOptionsEmpty");
+        test.equal("(mo_rep_msg).rep_value" in TestMessageOptionsMsg.options, false, "should treat empty repeated option as missing");
+        test.same(TestMessageOptionsMsg.parsedOptions, [
+            {"(mo_rep_msg)": {value: 1, rep_value: []}},
+        ], "should parse empty options correctly");
         test.end();
     });
 
