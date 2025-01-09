@@ -45,9 +45,13 @@ function decoder(mtype) {
                 ("k=%j", types.defaults[field.keyType]);
             else gen
                 ("k=null");
-
-            if (types.defaults[type] !== undefined) gen
-                ("value=%j", types.defaults[type]);
+            if (types.defaults[type] !== undefined) {
+                if (types.isLongType(type)) {
+                    gen("value= $util.Long ? $util.Long.fromValue(0) : 0");
+                } else {
+                    gen("value=%j", types.defaults[type]);
+                }
+            }
             else gen
                 ("value=null");
 

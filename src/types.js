@@ -26,6 +26,17 @@ var s = [
     "bytes"     // 14
 ];
 
+/**
+ * Determine whether a data type requires $utils.Long
+ * @param {string} type value types
+ * @returns {boolean} Result
+ */
+function isLongType(type) {
+    return ["int64", "uint64", "sint64", "fixed64", "sfixed64"].indexOf(type) !== -1;
+}
+
+types.isLongType = isLongType;
+
 function bake(values, offset) {
     var i = 0, o = {};
     offset |= 0;
