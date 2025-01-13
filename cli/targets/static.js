@@ -133,7 +133,7 @@ function buildNamespace(ref, ns) {
             ns.parent instanceof protobuf.Root ? "@exports " + escapeName(ns.name) : "@memberof " + exportName(ns.parent),
             "@namespace"
         ]);
-        push((config.es6 ? "const" : "var") + " " + escapeName(ns.name) + " = {};");
+        push((config.es6 ? "const" : "var") + " " + escapeName(ns.name) + " = $root['" + (escapeName(ns.parent.__exportName) === "$root" ? "" : escapeName(ns.parent.__exportName) + ".") + escapeName(ns.name) + "'] || {};");
     }
 
     ns.nestedArray.forEach(function(nested) {
