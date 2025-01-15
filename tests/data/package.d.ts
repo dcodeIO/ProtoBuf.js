@@ -1,4 +1,5 @@
 import * as $protobuf from "../..";
+import Long = require("long");
 export interface IPackage {
     name?: (string|null);
     version?: (string|null);
@@ -17,6 +18,8 @@ export interface IPackage {
     devDependencies?: ({ [k: string]: string }|null);
     types?: (string|null);
     cliDependencies?: (string[]|null);
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export class Package implements IPackage {
@@ -48,6 +51,8 @@ export class Package implements IPackage {
     public static toObject(message: Package, options?: $protobuf.IConversionOptions): { [k: string]: any };
     public toJSON(): { [k: string]: any };
     public static getTypeUrl(typeUrlPrefix?: string): string;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export namespace Package {
@@ -55,6 +60,8 @@ export namespace Package {
     interface IRepository {
         type?: (string|null);
         url?: (string|null);
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     class Repository implements IRepository {
@@ -71,5 +78,7 @@ export namespace Package {
         public static toObject(message: Package.Repository, options?: $protobuf.IConversionOptions): { [k: string]: any };
         public toJSON(): { [k: string]: any };
         public static getTypeUrl(typeUrlPrefix?: string): string;
+
+        public $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 }

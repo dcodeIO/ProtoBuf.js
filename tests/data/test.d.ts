@@ -1,11 +1,12 @@
 import * as $protobuf from "../..";
-import Long from "long";
-
+import Long = require("long");
 export namespace jspb {
 
     namespace test {
 
         interface IEmpty {
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class Empty implements IEmpty {
@@ -20,6 +21,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.Empty, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         enum OuterEnum {
@@ -29,6 +32,8 @@ export namespace jspb {
 
         interface IEnumContainer {
             outerEnum?: (jspb.test.OuterEnum|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class EnumContainer implements IEnumContainer {
@@ -44,12 +49,16 @@ export namespace jspb {
             public static toObject(message: jspb.test.EnumContainer, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ISimple1 {
             aString: string;
             aRepeatedString?: (string[]|null);
             aBoolean?: (boolean|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class Simple1 implements ISimple1 {
@@ -67,11 +76,15 @@ export namespace jspb {
             public static toObject(message: jspb.test.Simple1, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ISimple2 {
             aString: string;
             aRepeatedString?: (string[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class Simple2 implements ISimple2 {
@@ -88,6 +101,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.Simple2, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ISpecialCases {
@@ -95,6 +110,8 @@ export namespace jspb {
             "default": string;
             "function": string;
             "var": string;
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class SpecialCases implements ISpecialCases {
@@ -113,6 +130,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.SpecialCases, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IOptionalFields {
@@ -121,6 +140,8 @@ export namespace jspb {
             aNestedMessage?: (jspb.test.OptionalFields.INested|null);
             aRepeatedMessage?: (jspb.test.OptionalFields.INested[]|null);
             aRepeatedString?: (string[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class OptionalFields implements IOptionalFields {
@@ -140,12 +161,16 @@ export namespace jspb {
             public static toObject(message: jspb.test.OptionalFields, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace OptionalFields {
 
             interface INested {
                 anInt?: (number|null);
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class Nested implements INested {
@@ -161,6 +186,8 @@ export namespace jspb {
                 public static toObject(message: jspb.test.OptionalFields.Nested, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
         }
 
@@ -174,6 +201,8 @@ export namespace jspb {
             ".jspb.test.IndirectExtension.repeatedStr"?: (string[]|null);
             ".jspb.test.IndirectExtension.repeatedSimple"?: (jspb.test.ISimple1[]|null);
             ".jspb.test.simple1"?: (jspb.test.ISimple1|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class HasExtensions implements IHasExtensions {
@@ -191,6 +220,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.HasExtensions, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IComplex {
@@ -199,6 +230,8 @@ export namespace jspb {
             aNestedMessage?: (jspb.test.Complex.INested|null);
             aRepeatedMessage?: (jspb.test.Complex.INested[]|null);
             aRepeatedString?: (string[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class Complex implements IComplex {
@@ -218,12 +251,16 @@ export namespace jspb {
             public static toObject(message: jspb.test.Complex, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace Complex {
 
             interface INested {
                 anInt: number;
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class Nested implements INested {
@@ -239,10 +276,14 @@ export namespace jspb {
                 public static toObject(message: jspb.test.Complex.Nested, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
         }
 
         interface IOuterMessage {
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class OuterMessage implements IOuterMessage {
@@ -257,12 +298,16 @@ export namespace jspb {
             public static toObject(message: jspb.test.OuterMessage, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace OuterMessage {
 
             interface IComplex {
                 innerComplexField?: (number|null);
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class Complex implements IComplex {
@@ -278,11 +323,15 @@ export namespace jspb {
                 public static toObject(message: jspb.test.OuterMessage.Complex, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
         }
 
         interface IIsExtension {
             ext1?: (string|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class IsExtension implements IIsExtension {
@@ -298,9 +347,13 @@ export namespace jspb {
             public static toObject(message: jspb.test.IsExtension, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IIndirectExtension {
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class IndirectExtension implements IIndirectExtension {
@@ -315,6 +368,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.IndirectExtension, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IDefaultValues {
@@ -324,6 +379,8 @@ export namespace jspb {
             enumField?: (jspb.test.DefaultValues.Enum|null);
             emptyField?: (string|null);
             bytesField?: (Uint8Array|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class DefaultValues implements IDefaultValues {
@@ -344,6 +401,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.DefaultValues, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace DefaultValues {
@@ -363,6 +422,8 @@ export namespace jspb {
             requiredDoubleField: number;
             repeatedDoubleField?: (number[]|null);
             defaultDoubleField?: (number|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class FloatingPointFields implements IFloatingPointFields {
@@ -385,6 +446,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.FloatingPointFields, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ITestClone {
@@ -394,6 +457,8 @@ export namespace jspb {
             bytesField?: (Uint8Array|null);
             unused?: (string|null);
             ".jspb.test.CloneExtension.extField"?: (jspb.test.ICloneExtension|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class TestClone implements ITestClone {
@@ -413,10 +478,14 @@ export namespace jspb {
             public static toObject(message: jspb.test.TestClone, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ICloneExtension {
             ext?: (string|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class CloneExtension implements ICloneExtension {
@@ -432,15 +501,21 @@ export namespace jspb {
             public static toObject(message: jspb.test.CloneExtension, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ITestGroup {
             repeatedGroup?: (jspb.test.TestGroup.IRepeatedGroup[]|null);
             requiredGroup: jspb.test.TestGroup.IRequiredGroup;
             optionalGroup?: (jspb.test.TestGroup.IOptionalGroup|null);
+            messageInGroup?: (jspb.test.TestGroup.IMessageInGroup|null);
+            enumInGroup?: (jspb.test.TestGroup.IEnumInGroup|null);
             id?: (string|null);
             requiredSimple: jspb.test.ISimple2;
             optionalSimple?: (jspb.test.ISimple2|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class TestGroup implements ITestGroup {
@@ -448,6 +523,8 @@ export namespace jspb {
             public repeatedGroup: jspb.test.TestGroup.IRepeatedGroup[];
             public requiredGroup: jspb.test.TestGroup.IRequiredGroup;
             public optionalGroup?: (jspb.test.TestGroup.IOptionalGroup|null);
+            public messageInGroup?: (jspb.test.TestGroup.IMessageInGroup|null);
+            public enumInGroup?: (jspb.test.TestGroup.IEnumInGroup|null);
             public id: string;
             public requiredSimple: jspb.test.ISimple2;
             public optionalSimple?: (jspb.test.ISimple2|null);
@@ -461,6 +538,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.TestGroup, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace TestGroup {
@@ -468,6 +547,8 @@ export namespace jspb {
             interface IRepeatedGroup {
                 id: string;
                 someBool?: (boolean[]|null);
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class RepeatedGroup implements IRepeatedGroup {
@@ -484,10 +565,14 @@ export namespace jspb {
                 public static toObject(message: jspb.test.TestGroup.RepeatedGroup, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             interface IRequiredGroup {
                 id: string;
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class RequiredGroup implements IRequiredGroup {
@@ -503,10 +588,14 @@ export namespace jspb {
                 public static toObject(message: jspb.test.TestGroup.RequiredGroup, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             interface IOptionalGroup {
                 id: string;
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class OptionalGroup implements IOptionalGroup {
@@ -522,11 +611,95 @@ export namespace jspb {
                 public static toObject(message: jspb.test.TestGroup.OptionalGroup, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
+            }
+
+            interface IMessageInGroup {
+                id: jspb.test.TestGroup.MessageInGroup.INestedMessage;
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
+            }
+
+            class MessageInGroup implements IMessageInGroup {
+                constructor(properties?: jspb.test.TestGroup.IMessageInGroup);
+                public id: jspb.test.TestGroup.MessageInGroup.INestedMessage;
+                public static create(properties?: jspb.test.TestGroup.IMessageInGroup): jspb.test.TestGroup.MessageInGroup;
+                public static encode(message: jspb.test.TestGroup.IMessageInGroup, writer?: $protobuf.Writer): $protobuf.Writer;
+                public static encodeDelimited(message: jspb.test.TestGroup.IMessageInGroup, writer?: $protobuf.Writer): $protobuf.Writer;
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): jspb.test.TestGroup.MessageInGroup;
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): jspb.test.TestGroup.MessageInGroup;
+                public static verify(message: { [k: string]: any }): (string|null);
+                public static fromObject(object: { [k: string]: any }): jspb.test.TestGroup.MessageInGroup;
+                public static toObject(message: jspb.test.TestGroup.MessageInGroup, options?: $protobuf.IConversionOptions): { [k: string]: any };
+                public toJSON(): { [k: string]: any };
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
+            }
+
+            namespace MessageInGroup {
+
+                interface INestedMessage {
+                    id?: (string|null);
+
+                    $unknownFields?: ReadonlyArray<Uint8Array>;
+                }
+
+                class NestedMessage implements INestedMessage {
+                    constructor(properties?: jspb.test.TestGroup.MessageInGroup.INestedMessage);
+                    public id: string;
+                    public static create(properties?: jspb.test.TestGroup.MessageInGroup.INestedMessage): jspb.test.TestGroup.MessageInGroup.NestedMessage;
+                    public static encode(message: jspb.test.TestGroup.MessageInGroup.INestedMessage, writer?: $protobuf.Writer): $protobuf.Writer;
+                    public static encodeDelimited(message: jspb.test.TestGroup.MessageInGroup.INestedMessage, writer?: $protobuf.Writer): $protobuf.Writer;
+                    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): jspb.test.TestGroup.MessageInGroup.NestedMessage;
+                    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): jspb.test.TestGroup.MessageInGroup.NestedMessage;
+                    public static verify(message: { [k: string]: any }): (string|null);
+                    public static fromObject(object: { [k: string]: any }): jspb.test.TestGroup.MessageInGroup.NestedMessage;
+                    public static toObject(message: jspb.test.TestGroup.MessageInGroup.NestedMessage, options?: $protobuf.IConversionOptions): { [k: string]: any };
+                    public toJSON(): { [k: string]: any };
+                    public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                    public $unknownFields?: ReadonlyArray<Uint8Array>;
+                }
+            }
+
+            interface IEnumInGroup {
+                id: jspb.test.TestGroup.EnumInGroup.NestedEnum;
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
+            }
+
+            class EnumInGroup implements IEnumInGroup {
+                constructor(properties?: jspb.test.TestGroup.IEnumInGroup);
+                public id: jspb.test.TestGroup.EnumInGroup.NestedEnum;
+                public static create(properties?: jspb.test.TestGroup.IEnumInGroup): jspb.test.TestGroup.EnumInGroup;
+                public static encode(message: jspb.test.TestGroup.IEnumInGroup, writer?: $protobuf.Writer): $protobuf.Writer;
+                public static encodeDelimited(message: jspb.test.TestGroup.IEnumInGroup, writer?: $protobuf.Writer): $protobuf.Writer;
+                public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): jspb.test.TestGroup.EnumInGroup;
+                public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): jspb.test.TestGroup.EnumInGroup;
+                public static verify(message: { [k: string]: any }): (string|null);
+                public static fromObject(object: { [k: string]: any }): jspb.test.TestGroup.EnumInGroup;
+                public static toObject(message: jspb.test.TestGroup.EnumInGroup, options?: $protobuf.IConversionOptions): { [k: string]: any };
+                public toJSON(): { [k: string]: any };
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
+            }
+
+            namespace EnumInGroup {
+
+                enum NestedEnum {
+                    first = 0,
+                    second = 1
+                }
             }
         }
 
         interface ITestGroup1 {
             group?: (jspb.test.TestGroup.IRepeatedGroup|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class TestGroup1 implements ITestGroup1 {
@@ -542,11 +715,15 @@ export namespace jspb {
             public static toObject(message: jspb.test.TestGroup1, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ITestReservedNames {
             extension?: (number|null);
             ".jspb.test.TestReservedNamesExtension.foo"?: (number|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class TestReservedNames implements ITestReservedNames {
@@ -562,9 +739,13 @@ export namespace jspb {
             public static toObject(message: jspb.test.TestReservedNames, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ITestReservedNamesExtension {
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class TestReservedNamesExtension implements ITestReservedNamesExtension {
@@ -579,6 +760,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.TestReservedNamesExtension, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ITestMessageWithOneof {
@@ -592,6 +775,8 @@ export namespace jspb {
             atwo?: (number|null);
             bone?: (number|null);
             btwo?: (number|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class TestMessageWithOneof implements ITestMessageWithOneof {
@@ -620,11 +805,15 @@ export namespace jspb {
             public static toObject(message: jspb.test.TestMessageWithOneof, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ITestEndsWithBytes {
             value?: (number|null);
             data?: (Uint8Array|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class TestEndsWithBytes implements ITestEndsWithBytes {
@@ -641,6 +830,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.TestEndsWithBytes, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ITestMapFieldsNoBinary {
@@ -656,6 +847,8 @@ export namespace jspb {
             mapBoolString?: ({ [k: string]: string }|null);
             testMapFields?: (jspb.test.ITestMapFieldsNoBinary|null);
             mapStringTestmapfields?: ({ [k: string]: jspb.test.ITestMapFieldsNoBinary }|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class TestMapFieldsNoBinary implements ITestMapFieldsNoBinary {
@@ -682,6 +875,8 @@ export namespace jspb {
             public static toObject(message: jspb.test.TestMapFieldsNoBinary, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         enum MapValueEnumNoBinary {
@@ -692,6 +887,8 @@ export namespace jspb {
 
         interface IMapValueMessageNoBinary {
             foo?: (number|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class MapValueMessageNoBinary implements IMapValueMessageNoBinary {
@@ -707,9 +904,13 @@ export namespace jspb {
             public static toObject(message: jspb.test.MapValueMessageNoBinary, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IDeeply {
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class Deeply implements IDeeply {
@@ -724,11 +925,15 @@ export namespace jspb {
             public static toObject(message: jspb.test.Deeply, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace Deeply {
 
             interface INested {
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class Nested implements INested {
@@ -743,12 +948,16 @@ export namespace jspb {
                 public static toObject(message: jspb.test.Deeply.Nested, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             namespace Nested {
 
                 interface IMessage {
                     count?: (number|null);
+
+                    $unknownFields?: ReadonlyArray<Uint8Array>;
                 }
 
                 class Message implements IMessage {
@@ -764,6 +973,8 @@ export namespace jspb {
                     public static toObject(message: jspb.test.Deeply.Nested.Message, options?: $protobuf.IConversionOptions): { [k: string]: any };
                     public toJSON(): { [k: string]: any };
                     public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                    public $unknownFields?: ReadonlyArray<Uint8Array>;
                 }
             }
         }
@@ -776,6 +987,8 @@ export namespace google {
 
         interface IFileDescriptorSet {
             file?: (google.protobuf.IFileDescriptorProto[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class FileDescriptorSet implements IFileDescriptorSet {
@@ -791,6 +1004,8 @@ export namespace google {
             public static toObject(message: google.protobuf.FileDescriptorSet, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IFileDescriptorProto {
@@ -806,6 +1021,8 @@ export namespace google {
             options?: (google.protobuf.IFileOptions|null);
             sourceCodeInfo?: (google.protobuf.ISourceCodeInfo|null);
             syntax?: (string|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class FileDescriptorProto implements IFileDescriptorProto {
@@ -832,6 +1049,8 @@ export namespace google {
             public static toObject(message: google.protobuf.FileDescriptorProto, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IDescriptorProto {
@@ -845,6 +1064,8 @@ export namespace google {
             options?: (google.protobuf.IMessageOptions|null);
             reservedRange?: (google.protobuf.DescriptorProto.IReservedRange[]|null);
             reservedName?: (string[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class DescriptorProto implements IDescriptorProto {
@@ -869,6 +1090,8 @@ export namespace google {
             public static toObject(message: google.protobuf.DescriptorProto, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace DescriptorProto {
@@ -876,6 +1099,8 @@ export namespace google {
             interface IExtensionRange {
                 start?: (number|null);
                 end?: (number|null);
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class ExtensionRange implements IExtensionRange {
@@ -892,11 +1117,15 @@ export namespace google {
                 public static toObject(message: google.protobuf.DescriptorProto.ExtensionRange, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             interface IReservedRange {
                 start?: (number|null);
                 end?: (number|null);
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class ReservedRange implements IReservedRange {
@@ -913,6 +1142,8 @@ export namespace google {
                 public static toObject(message: google.protobuf.DescriptorProto.ReservedRange, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
         }
 
@@ -927,6 +1158,8 @@ export namespace google {
             oneofIndex?: (number|null);
             jsonName?: (string|null);
             options?: (google.protobuf.IFieldOptions|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class FieldDescriptorProto implements IFieldDescriptorProto {
@@ -951,6 +1184,8 @@ export namespace google {
             public static toObject(message: google.protobuf.FieldDescriptorProto, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace FieldDescriptorProto {
@@ -986,6 +1221,8 @@ export namespace google {
         interface IOneofDescriptorProto {
             name?: (string|null);
             options?: (google.protobuf.IOneofOptions|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class OneofDescriptorProto implements IOneofDescriptorProto {
@@ -1002,12 +1239,16 @@ export namespace google {
             public static toObject(message: google.protobuf.OneofDescriptorProto, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IEnumDescriptorProto {
             name?: (string|null);
             value?: (google.protobuf.IEnumValueDescriptorProto[]|null);
             options?: (google.protobuf.IEnumOptions|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class EnumDescriptorProto implements IEnumDescriptorProto {
@@ -1025,12 +1266,16 @@ export namespace google {
             public static toObject(message: google.protobuf.EnumDescriptorProto, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IEnumValueDescriptorProto {
             name?: (string|null);
             number?: (number|null);
             options?: (google.protobuf.IEnumValueOptions|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class EnumValueDescriptorProto implements IEnumValueDescriptorProto {
@@ -1048,12 +1293,16 @@ export namespace google {
             public static toObject(message: google.protobuf.EnumValueDescriptorProto, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IServiceDescriptorProto {
             name?: (string|null);
             method?: (google.protobuf.IMethodDescriptorProto[]|null);
             options?: (google.protobuf.IServiceOptions|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class ServiceDescriptorProto implements IServiceDescriptorProto {
@@ -1071,6 +1320,8 @@ export namespace google {
             public static toObject(message: google.protobuf.ServiceDescriptorProto, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IMethodDescriptorProto {
@@ -1080,6 +1331,8 @@ export namespace google {
             options?: (google.protobuf.IMethodOptions|null);
             clientStreaming?: (boolean|null);
             serverStreaming?: (boolean|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class MethodDescriptorProto implements IMethodDescriptorProto {
@@ -1100,6 +1353,8 @@ export namespace google {
             public static toObject(message: google.protobuf.MethodDescriptorProto, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IFileOptions {
@@ -1118,6 +1373,8 @@ export namespace google {
             objcClassPrefix?: (string|null);
             csharpNamespace?: (string|null);
             uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class FileOptions implements IFileOptions {
@@ -1147,6 +1404,8 @@ export namespace google {
             public static toObject(message: google.protobuf.FileOptions, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace FileOptions {
@@ -1164,6 +1423,8 @@ export namespace google {
             deprecated?: (boolean|null);
             mapEntry?: (boolean|null);
             uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class MessageOptions implements IMessageOptions {
@@ -1183,6 +1444,8 @@ export namespace google {
             public static toObject(message: google.protobuf.MessageOptions, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IFieldOptions {
@@ -1193,6 +1456,8 @@ export namespace google {
             deprecated?: (boolean|null);
             weak?: (boolean|null);
             uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class FieldOptions implements IFieldOptions {
@@ -1214,6 +1479,8 @@ export namespace google {
             public static toObject(message: google.protobuf.FieldOptions, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace FieldOptions {
@@ -1233,6 +1500,8 @@ export namespace google {
 
         interface IOneofOptions {
             uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class OneofOptions implements IOneofOptions {
@@ -1248,6 +1517,8 @@ export namespace google {
             public static toObject(message: google.protobuf.OneofOptions, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IEnumOptions {
@@ -1255,6 +1526,8 @@ export namespace google {
             deprecated?: (boolean|null);
             uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
             ".jspb.test.IsExtension.simpleOption"?: (string|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class EnumOptions implements IEnumOptions {
@@ -1272,11 +1545,15 @@ export namespace google {
             public static toObject(message: google.protobuf.EnumOptions, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IEnumValueOptions {
             deprecated?: (boolean|null);
             uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class EnumValueOptions implements IEnumValueOptions {
@@ -1293,11 +1570,15 @@ export namespace google {
             public static toObject(message: google.protobuf.EnumValueOptions, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IServiceOptions {
             deprecated?: (boolean|null);
             uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class ServiceOptions implements IServiceOptions {
@@ -1314,12 +1595,16 @@ export namespace google {
             public static toObject(message: google.protobuf.ServiceOptions, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IMethodOptions {
             deprecated?: (boolean|null);
             idempotencyLevel?: (google.protobuf.MethodOptions.IdempotencyLevel|null);
             uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class MethodOptions implements IMethodOptions {
@@ -1337,6 +1622,8 @@ export namespace google {
             public static toObject(message: google.protobuf.MethodOptions, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace MethodOptions {
@@ -1356,6 +1643,8 @@ export namespace google {
             doubleValue?: (number|null);
             stringValue?: (Uint8Array|null);
             aggregateValue?: (string|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class UninterpretedOption implements IUninterpretedOption {
@@ -1377,6 +1666,8 @@ export namespace google {
             public static toObject(message: google.protobuf.UninterpretedOption, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace UninterpretedOption {
@@ -1384,6 +1675,8 @@ export namespace google {
             interface INamePart {
                 namePart: string;
                 isExtension: boolean;
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class NamePart implements INamePart {
@@ -1400,11 +1693,15 @@ export namespace google {
                 public static toObject(message: google.protobuf.UninterpretedOption.NamePart, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
         }
 
         interface ISourceCodeInfo {
             location?: (google.protobuf.SourceCodeInfo.ILocation[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class SourceCodeInfo implements ISourceCodeInfo {
@@ -1420,6 +1717,8 @@ export namespace google {
             public static toObject(message: google.protobuf.SourceCodeInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace SourceCodeInfo {
@@ -1430,6 +1729,8 @@ export namespace google {
                 leadingComments?: (string|null);
                 trailingComments?: (string|null);
                 leadingDetachedComments?: (string[]|null);
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class Location implements ILocation {
@@ -1449,11 +1750,15 @@ export namespace google {
                 public static toObject(message: google.protobuf.SourceCodeInfo.Location, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
         }
 
         interface IGeneratedCodeInfo {
             annotation?: (google.protobuf.GeneratedCodeInfo.IAnnotation[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class GeneratedCodeInfo implements IGeneratedCodeInfo {
@@ -1469,6 +1774,8 @@ export namespace google {
             public static toObject(message: google.protobuf.GeneratedCodeInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         namespace GeneratedCodeInfo {
@@ -1478,6 +1785,8 @@ export namespace google {
                 sourceFile?: (string|null);
                 begin?: (number|null);
                 end?: (number|null);
+
+                $unknownFields?: ReadonlyArray<Uint8Array>;
             }
 
             class Annotation implements IAnnotation {
@@ -1496,6 +1805,8 @@ export namespace google {
                 public static toObject(message: google.protobuf.GeneratedCodeInfo.Annotation, options?: $protobuf.IConversionOptions): { [k: string]: any };
                 public toJSON(): { [k: string]: any };
                 public static getTypeUrl(typeUrlPrefix?: string): string;
+
+                public $unknownFields?: ReadonlyArray<Uint8Array>;
             }
         }
     }

@@ -1,4 +1,5 @@
 import * as $protobuf from "../..";
+import Long = require("long");
 export const FileDescriptorSet: $protobuf.Type;
 
 export const FileDescriptorProto: $protobuf.Type;
@@ -58,6 +59,8 @@ export const GeneratedCodeInfo: $protobuf.Type & {
 
 export interface IFileDescriptorSet {
     file: IFileDescriptorProto[];
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IFileDescriptorProto {
@@ -73,6 +76,8 @@ export interface IFileDescriptorProto {
     options?: IFileOptions;
     sourceCodeInfo?: any;
     syntax?: string;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IFileOptions {
@@ -90,6 +95,8 @@ export interface IFileOptions {
     ccEnableArenas?: boolean;
     objcClassPrefix?: string;
     csharpNamespace?: string;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 type IFileOptionsOptimizeMode = number;
@@ -105,20 +112,28 @@ export interface IDescriptorProto {
     options?: IMessageOptions;
     reservedRange?: IDescriptorProtoReservedRange[];
     reservedName?: string[];
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IMessageOptions {
     mapEntry?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IDescriptorProtoExtensionRange {
     start?: number;
     end?: number;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IDescriptorProtoReservedRange {
     start?: number;
     end?: number;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IFieldDescriptorProto {
@@ -132,6 +147,8 @@ export interface IFieldDescriptorProto {
     oneofIndex?: number;
     jsonName?: any;
     options?: IFieldOptions;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 type IFieldDescriptorProtoLabel = number;
@@ -141,6 +158,8 @@ type IFieldDescriptorProtoType = number;
 export interface IFieldOptions {
     packed?: boolean;
     jstype?: IFieldOptionsJSType;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 type IFieldOptionsJSType = number;
@@ -149,32 +168,44 @@ export interface IEnumDescriptorProto {
     name?: string;
     value?: IEnumValueDescriptorProto[];
     options?: IEnumOptions;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IEnumValueDescriptorProto {
     name?: string;
     number?: number;
     options?: any;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IEnumOptions {
     allowAlias?: boolean;
     deprecated?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IOneofDescriptorProto {
     name?: string;
     options?: any;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IServiceDescriptorProto {
     name?: string;
     method?: IMethodDescriptorProto[];
     options?: IServiceOptions;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IServiceOptions {
     deprecated?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IMethodDescriptorProto {
@@ -184,8 +215,12 @@ export interface IMethodDescriptorProto {
     options?: IMethodOptions;
     clientStreaming?: boolean;
     serverStreaming?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IMethodOptions {
     deprecated?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }

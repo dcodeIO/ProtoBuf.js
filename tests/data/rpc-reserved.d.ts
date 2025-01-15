@@ -1,9 +1,12 @@
 import * as $protobuf from "../..";
+import Long = require("long");
 export class MyService extends $protobuf.rpc.Service {
     constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
     public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): MyService;
     public delete(request: IMyRequest, callback: MyService.DeleteCallback): void;
     public delete(request: IMyRequest): Promise<MyResponse>;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export namespace MyService {
@@ -13,6 +16,8 @@ export namespace MyService {
 
 export interface IMyRequest {
     path?: (string|null);
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export class MyRequest implements IMyRequest {
@@ -28,10 +33,14 @@ export class MyRequest implements IMyRequest {
     public static toObject(message: MyRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
     public toJSON(): { [k: string]: any };
     public static getTypeUrl(typeUrlPrefix?: string): string;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface IMyResponse {
     status?: (number|null);
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export class MyResponse implements IMyResponse {
@@ -47,4 +56,6 @@ export class MyResponse implements IMyResponse {
     public static toObject(message: MyResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
     public toJSON(): { [k: string]: any };
     public static getTypeUrl(typeUrlPrefix?: string): string;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }

@@ -133,8 +133,19 @@ $root.MyRequest = (function() {
     MyRequest.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        var fullyUnknown = [];
+        if (message.$unknownFields && $root.MyRequest.decode)
+            for (var i = 0; i < message.$unknownFields.length; ++i)
+                try {
+                    var known = $root.MyRequest.decode(message.$unknownFields[i]);
+                    fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                    message = Object.assign(known, message);
+                } catch (_) {
+                }
         if (message.path != null && Object.hasOwnProperty.call(message, "path"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.path);
+        for (var i = 0; i < fullyUnknown.length; ++i)
+            writer._unknownField(fullyUnknown[i]);
         return writer;
     };
 
@@ -167,13 +178,18 @@ $root.MyRequest = (function() {
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new $root.MyRequest();
         while (reader.pos < end) {
+            var unknownStartPos = reader.pos;
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.path = reader.string();
-                break;
+            case 1: {
+                    message.path = reader.string();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
+                if (!message.$unknownFields)
+                    message.$unknownFields = [];
+                message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                 break;
             }
         }
@@ -335,8 +351,19 @@ $root.MyResponse = (function() {
     MyResponse.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        var fullyUnknown = [];
+        if (message.$unknownFields && $root.MyResponse.decode)
+            for (var i = 0; i < message.$unknownFields.length; ++i)
+                try {
+                    var known = $root.MyResponse.decode(message.$unknownFields[i]);
+                    fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                    message = Object.assign(known, message);
+                } catch (_) {
+                }
         if (message.status != null && Object.hasOwnProperty.call(message, "status"))
             writer.uint32(/* id 2, wireType 0 =*/16).int32(message.status);
+        for (var i = 0; i < fullyUnknown.length; ++i)
+            writer._unknownField(fullyUnknown[i]);
         return writer;
     };
 
@@ -369,13 +396,18 @@ $root.MyResponse = (function() {
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new $root.MyResponse();
         while (reader.pos < end) {
+            var unknownStartPos = reader.pos;
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 2:
-                message.status = reader.int32();
-                break;
+            case 2: {
+                    message.status = reader.int32();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
+                if (!message.$unknownFields)
+                    message.$unknownFields = [];
+                message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                 break;
             }
         }

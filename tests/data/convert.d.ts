@@ -1,6 +1,5 @@
 import * as $protobuf from "../..";
-import Long from "long";
-
+import Long = require("long");
 export interface IMessage {
     stringVal?: (string|null);
     stringRepeated?: (string[]|null);
@@ -11,6 +10,8 @@ export interface IMessage {
     enumVal?: (Message.SomeEnum|null);
     enumRepeated?: (Message.SomeEnum[]|null);
     int64Map?: ({ [k: string]: (number|Long) }|null);
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export class Message implements IMessage {
@@ -34,6 +35,8 @@ export class Message implements IMessage {
     public static toObject(message: Message, options?: $protobuf.IConversionOptions): { [k: string]: any };
     public toJSON(): { [k: string]: any };
     public static getTypeUrl(typeUrlPrefix?: string): string;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export namespace Message {

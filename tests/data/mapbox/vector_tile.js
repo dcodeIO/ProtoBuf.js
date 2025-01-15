@@ -75,9 +75,20 @@ $root.vector_tile = (function() {
         Tile.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            var fullyUnknown = [];
+            if (message.$unknownFields && $root.vector_tile.Tile.decode)
+                for (var i = 0; i < message.$unknownFields.length; ++i)
+                    try {
+                        var known = $root.vector_tile.Tile.decode(message.$unknownFields[i]);
+                        fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                        message = Object.assign(known, message);
+                    } catch (_) {
+                    }
             if (message.layers != null && message.layers.length)
                 for (var i = 0; i < message.layers.length; ++i)
                     $root.vector_tile.Tile.Layer.encode(message.layers[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            for (var i = 0; i < fullyUnknown.length; ++i)
+                writer._unknownField(fullyUnknown[i]);
             return writer;
         };
 
@@ -110,15 +121,20 @@ $root.vector_tile = (function() {
                 reader = $Reader.create(reader);
             var end = length === undefined ? reader.len : reader.pos + length, message = new $root.vector_tile.Tile();
             while (reader.pos < end) {
+                var unknownStartPos = reader.pos;
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 3:
-                    if (!(message.layers && message.layers.length))
-                        message.layers = [];
-                    message.layers.push($root.vector_tile.Tile.Layer.decode(reader, reader.uint32()));
-                    break;
+                case 3: {
+                        if (!(message.layers && message.layers.length))
+                            message.layers = [];
+                        message.layers.push($root.vector_tile.Tile.Layer.decode(reader, reader.uint32()));
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
+                    if (!message.$unknownFields)
+                        message.$unknownFields = [];
+                    message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                     break;
                 }
             }
@@ -366,6 +382,15 @@ $root.vector_tile = (function() {
             Value.encode = function encode(message, writer) {
                 if (!writer)
                     writer = $Writer.create();
+                var fullyUnknown = [];
+                if (message.$unknownFields && $root.vector_tile.Tile.Value.decode)
+                    for (var i = 0; i < message.$unknownFields.length; ++i)
+                        try {
+                            var known = $root.vector_tile.Tile.Value.decode(message.$unknownFields[i]);
+                            fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                            message = Object.assign(known, message);
+                        } catch (_) {
+                        }
                 if (message.stringValue != null && Object.hasOwnProperty.call(message, "stringValue"))
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.stringValue);
                 if (message.floatValue != null && Object.hasOwnProperty.call(message, "floatValue"))
@@ -380,6 +405,8 @@ $root.vector_tile = (function() {
                     writer.uint32(/* id 6, wireType 0 =*/48).sint64(message.sintValue);
                 if (message.boolValue != null && Object.hasOwnProperty.call(message, "boolValue"))
                     writer.uint32(/* id 7, wireType 0 =*/56).bool(message.boolValue);
+                for (var i = 0; i < fullyUnknown.length; ++i)
+                    writer._unknownField(fullyUnknown[i]);
                 return writer;
             };
 
@@ -412,31 +439,42 @@ $root.vector_tile = (function() {
                     reader = $Reader.create(reader);
                 var end = length === undefined ? reader.len : reader.pos + length, message = new $root.vector_tile.Tile.Value();
                 while (reader.pos < end) {
+                    var unknownStartPos = reader.pos;
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.stringValue = reader.string();
-                        break;
-                    case 2:
-                        message.floatValue = reader.float();
-                        break;
-                    case 3:
-                        message.doubleValue = reader.double();
-                        break;
-                    case 4:
-                        message.intValue = reader.int64();
-                        break;
-                    case 5:
-                        message.uintValue = reader.uint64();
-                        break;
-                    case 6:
-                        message.sintValue = reader.sint64();
-                        break;
-                    case 7:
-                        message.boolValue = reader.bool();
-                        break;
+                    case 1: {
+                            message.stringValue = reader.string();
+                            break;
+                        }
+                    case 2: {
+                            message.floatValue = reader.float();
+                            break;
+                        }
+                    case 3: {
+                            message.doubleValue = reader.double();
+                            break;
+                        }
+                    case 4: {
+                            message.intValue = reader.int64();
+                            break;
+                        }
+                    case 5: {
+                            message.uintValue = reader.uint64();
+                            break;
+                        }
+                    case 6: {
+                            message.sintValue = reader.sint64();
+                            break;
+                        }
+                    case 7: {
+                            message.boolValue = reader.bool();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
+                        if (!message.$unknownFields)
+                            message.$unknownFields = [];
+                        message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                         break;
                     }
                 }
@@ -718,6 +756,15 @@ $root.vector_tile = (function() {
             Feature.encode = function encode(message, writer) {
                 if (!writer)
                     writer = $Writer.create();
+                var fullyUnknown = [];
+                if (message.$unknownFields && $root.vector_tile.Tile.Feature.decode)
+                    for (var i = 0; i < message.$unknownFields.length; ++i)
+                        try {
+                            var known = $root.vector_tile.Tile.Feature.decode(message.$unknownFields[i]);
+                            fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                            message = Object.assign(known, message);
+                        } catch (_) {
+                        }
                 if (message.id != null && Object.hasOwnProperty.call(message, "id"))
                     writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.id);
                 if (message.tags != null && message.tags.length) {
@@ -734,6 +781,8 @@ $root.vector_tile = (function() {
                         writer.uint32(message.geometry[i]);
                     writer.ldelim();
                 }
+                for (var i = 0; i < fullyUnknown.length; ++i)
+                    writer._unknownField(fullyUnknown[i]);
                 return writer;
             };
 
@@ -766,36 +815,44 @@ $root.vector_tile = (function() {
                     reader = $Reader.create(reader);
                 var end = length === undefined ? reader.len : reader.pos + length, message = new $root.vector_tile.Tile.Feature();
                 while (reader.pos < end) {
+                    var unknownStartPos = reader.pos;
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.id = reader.uint64();
-                        break;
-                    case 2:
-                        if (!(message.tags && message.tags.length))
-                            message.tags = [];
-                        if ((tag & 7) === 2) {
-                            var end2 = reader.uint32() + reader.pos;
-                            while (reader.pos < end2)
+                    case 1: {
+                            message.id = reader.uint64();
+                            break;
+                        }
+                    case 2: {
+                            if (!(message.tags && message.tags.length))
+                                message.tags = [];
+                            if ((tag & 7) === 2) {
+                                var end2 = reader.uint32() + reader.pos;
+                                while (reader.pos < end2)
+                                    message.tags.push(reader.uint32());
+                            } else
                                 message.tags.push(reader.uint32());
-                        } else
-                            message.tags.push(reader.uint32());
-                        break;
-                    case 3:
-                        message.type = reader.int32();
-                        break;
-                    case 4:
-                        if (!(message.geometry && message.geometry.length))
-                            message.geometry = [];
-                        if ((tag & 7) === 2) {
-                            var end2 = reader.uint32() + reader.pos;
-                            while (reader.pos < end2)
+                            break;
+                        }
+                    case 3: {
+                            message.type = reader.int32();
+                            break;
+                        }
+                    case 4: {
+                            if (!(message.geometry && message.geometry.length))
+                                message.geometry = [];
+                            if ((tag & 7) === 2) {
+                                var end2 = reader.uint32() + reader.pos;
+                                while (reader.pos < end2)
+                                    message.geometry.push(reader.uint32());
+                            } else
                                 message.geometry.push(reader.uint32());
-                        } else
-                            message.geometry.push(reader.uint32());
-                        break;
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
+                        if (!message.$unknownFields)
+                            message.$unknownFields = [];
+                        message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                         break;
                     }
                 }
@@ -888,6 +945,12 @@ $root.vector_tile = (function() {
                         message.tags[i] = object.tags[i] >>> 0;
                 }
                 switch (object.type) {
+                default:
+                    if (typeof object.type === "number") {
+                        message.type = object.type;
+                        break;
+                    }
+                    break;
                 case "UNKNOWN":
                 case 0:
                     message.type = 0;
@@ -951,7 +1014,7 @@ $root.vector_tile = (function() {
                         object.tags[j] = message.tags[j];
                 }
                 if (message.type != null && message.hasOwnProperty("type"))
-                    object.type = options.enums === String ? $root.vector_tile.Tile.GeomType[message.type] : message.type;
+                    object.type = options.enums === String ? $root.vector_tile.Tile.GeomType[message.type] === undefined ? message.type : $root.vector_tile.Tile.GeomType[message.type] : message.type;
                 if (message.geometry && message.geometry.length) {
                     object.geometry = [];
                     for (var j = 0; j < message.geometry.length; ++j)
@@ -1093,6 +1156,15 @@ $root.vector_tile = (function() {
             Layer.encode = function encode(message, writer) {
                 if (!writer)
                     writer = $Writer.create();
+                var fullyUnknown = [];
+                if (message.$unknownFields && $root.vector_tile.Tile.Layer.decode)
+                    for (var i = 0; i < message.$unknownFields.length; ++i)
+                        try {
+                            var known = $root.vector_tile.Tile.Layer.decode(message.$unknownFields[i]);
+                            fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                            message = Object.assign(known, message);
+                        } catch (_) {
+                        }
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
                 if (message.features != null && message.features.length)
                     for (var i = 0; i < message.features.length; ++i)
@@ -1106,6 +1178,8 @@ $root.vector_tile = (function() {
                 if (message.extent != null && Object.hasOwnProperty.call(message, "extent"))
                     writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.extent);
                 writer.uint32(/* id 15, wireType 0 =*/120).uint32(message.version);
+                for (var i = 0; i < fullyUnknown.length; ++i)
+                    writer._unknownField(fullyUnknown[i]);
                 return writer;
             };
 
@@ -1138,34 +1212,44 @@ $root.vector_tile = (function() {
                     reader = $Reader.create(reader);
                 var end = length === undefined ? reader.len : reader.pos + length, message = new $root.vector_tile.Tile.Layer();
                 while (reader.pos < end) {
+                    var unknownStartPos = reader.pos;
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 15:
-                        message.version = reader.uint32();
-                        break;
-                    case 1:
-                        message.name = reader.string();
-                        break;
-                    case 2:
-                        if (!(message.features && message.features.length))
-                            message.features = [];
-                        message.features.push($root.vector_tile.Tile.Feature.decode(reader, reader.uint32()));
-                        break;
-                    case 3:
-                        if (!(message.keys && message.keys.length))
-                            message.keys = [];
-                        message.keys.push(reader.string());
-                        break;
-                    case 4:
-                        if (!(message.values && message.values.length))
-                            message.values = [];
-                        message.values.push($root.vector_tile.Tile.Value.decode(reader, reader.uint32()));
-                        break;
-                    case 5:
-                        message.extent = reader.uint32();
-                        break;
+                    case 15: {
+                            message.version = reader.uint32();
+                            break;
+                        }
+                    case 1: {
+                            message.name = reader.string();
+                            break;
+                        }
+                    case 2: {
+                            if (!(message.features && message.features.length))
+                                message.features = [];
+                            message.features.push($root.vector_tile.Tile.Feature.decode(reader, reader.uint32()));
+                            break;
+                        }
+                    case 3: {
+                            if (!(message.keys && message.keys.length))
+                                message.keys = [];
+                            message.keys.push(reader.string());
+                            break;
+                        }
+                    case 4: {
+                            if (!(message.values && message.values.length))
+                                message.values = [];
+                            message.values.push($root.vector_tile.Tile.Value.decode(reader, reader.uint32()));
+                            break;
+                        }
+                    case 5: {
+                            message.extent = reader.uint32();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
+                        if (!message.$unknownFields)
+                            message.$unknownFields = [];
+                        message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                         break;
                     }
                 }

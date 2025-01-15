@@ -383,6 +383,11 @@ Writer.prototype.bytes = function write_bytes(value) {
     return this.uint32(len)._push(writeBytes, len, value);
 };
 
+
+Writer.prototype._unknownField = function __unknownField(field) {
+    return this._push(writeBytes, field.length, field);
+};
+
 /**
  * Writes a string.
  * @param {string} value Value to write

@@ -558,6 +558,13 @@ function handleClass(element, parent) {
         handleElement(child, element);
     });
 
+    writeln();
+    if (is_interface) {
+        writeln("$unknownFields?: ReadonlyArray<Uint8Array>;");
+    } else {
+        writeln("public $unknownFields?: ReadonlyArray<Uint8Array>;");
+    }
+
     --indent;
     writeln("}");
 

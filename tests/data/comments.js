@@ -86,12 +86,23 @@ $root.Test1 = (function() {
     Test1.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        var fullyUnknown = [];
+        if (message.$unknownFields && $root.Test1.decode)
+            for (var i = 0; i < message.$unknownFields.length; ++i)
+                try {
+                    var known = $root.Test1.decode(message.$unknownFields[i]);
+                    fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                    message = Object.assign(known, message);
+                } catch (_) {
+                }
         if (message.field1 != null && Object.hasOwnProperty.call(message, "field1"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.field1);
         if (message.field2 != null && Object.hasOwnProperty.call(message, "field2"))
             writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.field2);
         if (message.field3 != null && Object.hasOwnProperty.call(message, "field3"))
             writer.uint32(/* id 3, wireType 0 =*/24).bool(message.field3);
+        for (var i = 0; i < fullyUnknown.length; ++i)
+            writer._unknownField(fullyUnknown[i]);
         return writer;
     };
 
@@ -124,19 +135,26 @@ $root.Test1 = (function() {
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Test1();
         while (reader.pos < end) {
+            var unknownStartPos = reader.pos;
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.field1 = reader.string();
-                break;
-            case 2:
-                message.field2 = reader.uint32();
-                break;
-            case 3:
-                message.field3 = reader.bool();
-                break;
+            case 1: {
+                    message.field1 = reader.string();
+                    break;
+                }
+            case 2: {
+                    message.field2 = reader.uint32();
+                    break;
+                }
+            case 3: {
+                    message.field3 = reader.bool();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
+                if (!message.$unknownFields)
+                    message.$unknownFields = [];
+                message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                 break;
             }
         }
@@ -306,6 +324,17 @@ $root.Test2 = (function() {
     Test2.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        var fullyUnknown = [];
+        if (message.$unknownFields && $root.Test2.decode)
+            for (var i = 0; i < message.$unknownFields.length; ++i)
+                try {
+                    var known = $root.Test2.decode(message.$unknownFields[i]);
+                    fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                    message = Object.assign(known, message);
+                } catch (_) {
+                }
+        for (var i = 0; i < fullyUnknown.length; ++i)
+            writer._unknownField(fullyUnknown[i]);
         return writer;
     };
 
@@ -338,10 +367,14 @@ $root.Test2 = (function() {
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Test2();
         while (reader.pos < end) {
+            var unknownStartPos = reader.pos;
             var tag = reader.uint32();
             switch (tag >>> 3) {
             default:
                 reader.skipType(tag & 7);
+                if (!message.$unknownFields)
+                    message.$unknownFields = [];
+                message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                 break;
             }
         }

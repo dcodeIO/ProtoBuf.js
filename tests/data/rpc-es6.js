@@ -131,8 +131,19 @@ export const MyRequest = $root.MyRequest = (() => {
     MyRequest.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        let fullyUnknown = [];
+        if (message.$unknownFields && $root.MyRequest.decode)
+            for (let i = 0; i < message.$unknownFields.length; ++i)
+                try {
+                    let known = $root.MyRequest.decode(message.$unknownFields[i]);
+                    fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                    message = Object.assign(known, message);
+                } catch (_) {
+                }
         if (message.path != null && Object.hasOwnProperty.call(message, "path"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.path);
+        for (let i = 0; i < fullyUnknown.length; ++i)
+            writer._unknownField(fullyUnknown[i]);
         return writer;
     };
 
@@ -165,13 +176,18 @@ export const MyRequest = $root.MyRequest = (() => {
             reader = $Reader.create(reader);
         let end = length === undefined ? reader.len : reader.pos + length, message = new $root.MyRequest();
         while (reader.pos < end) {
+            let unknownStartPos = reader.pos;
             let tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.path = reader.string();
-                break;
+            case 1: {
+                    message.path = reader.string();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
+                if (!message.$unknownFields)
+                    message.$unknownFields = [];
+                message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                 break;
             }
         }
@@ -333,8 +349,19 @@ export const MyResponse = $root.MyResponse = (() => {
     MyResponse.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        let fullyUnknown = [];
+        if (message.$unknownFields && $root.MyResponse.decode)
+            for (let i = 0; i < message.$unknownFields.length; ++i)
+                try {
+                    let known = $root.MyResponse.decode(message.$unknownFields[i]);
+                    fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                    message = Object.assign(known, message);
+                } catch (_) {
+                }
         if (message.status != null && Object.hasOwnProperty.call(message, "status"))
             writer.uint32(/* id 2, wireType 0 =*/16).int32(message.status);
+        for (let i = 0; i < fullyUnknown.length; ++i)
+            writer._unknownField(fullyUnknown[i]);
         return writer;
     };
 
@@ -367,13 +394,18 @@ export const MyResponse = $root.MyResponse = (() => {
             reader = $Reader.create(reader);
         let end = length === undefined ? reader.len : reader.pos + length, message = new $root.MyResponse();
         while (reader.pos < end) {
+            let unknownStartPos = reader.pos;
             let tag = reader.uint32();
             switch (tag >>> 3) {
-            case 2:
-                message.status = reader.int32();
-                break;
+            case 2: {
+                    message.status = reader.int32();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
+                if (!message.$unknownFields)
+                    message.$unknownFields = [];
+                message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                 break;
             }
         }

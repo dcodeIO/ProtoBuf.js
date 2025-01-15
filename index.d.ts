@@ -16,27 +16,37 @@ export namespace common {
     interface IAny {
         typeUrl?: string;
         bytes?: Uint8Array;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.Duration message. */
     interface IDuration {
         seconds?: (number|Long);
         nanos?: number;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.Timestamp message. */
     interface ITimestamp {
         seconds?: (number|Long);
         nanos?: number;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.Empty message. */
     interface IEmpty {
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.Struct message. */
     interface IStruct {
         fields?: { [k: string]: IValue };
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.Value message. */
@@ -48,56 +58,78 @@ export namespace common {
         boolValue?: boolean;
         structValue?: IStruct;
         listValue?: IListValue;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.ListValue message. */
     interface IListValue {
         values?: IValue[];
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.DoubleValue message. */
     interface IDoubleValue {
         value?: number;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.FloatValue message. */
     interface IFloatValue {
         value?: number;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.Int64Value message. */
     interface IInt64Value {
         value?: (number|Long);
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.UInt64Value message. */
     interface IUInt64Value {
         value?: (number|Long);
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.Int32Value message. */
     interface IInt32Value {
         value?: number;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.UInt32Value message. */
     interface IUInt32Value {
         value?: number;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.BoolValue message. */
     interface IBoolValue {
         value?: boolean;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.StringValue message. */
     interface IStringValue {
         value?: string;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Properties of a google.protobuf.BytesValue message. */
     interface IBytesValue {
         value?: Uint8Array;
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /**
@@ -244,6 +276,8 @@ export class Enum extends ReflectionObject {
      * @returns `true` if reserved, otherwise `false`
      */
     public isReservedName(name: string): boolean;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Enum descriptor. */
@@ -254,6 +288,8 @@ export interface IEnum {
 
     /** Enum options */
     options?: { [k: string]: any };
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Reflected message field. */
@@ -300,6 +336,8 @@ export class Field extends FieldBase {
      * @returns Decorator function
      */
     public static d<T extends Message<T>>(fieldId: number, fieldType: (Constructor<T>|string), fieldRule?: ("optional"|"required"|"repeated")): FieldDecorator;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Base class of all reflected message fields. This is not an actual class but here for the sake of having consistent type definitions. */
@@ -381,6 +419,8 @@ export class FieldBase extends ReflectionObject {
      * @throws {Error} If any reference cannot be resolved
      */
     public resolve(): Field;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Field descriptor. */
@@ -397,6 +437,8 @@ export interface IField {
 
     /** Field options */
     options?: { [k: string]: any };
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Extension field descriptor. */
@@ -404,6 +446,8 @@ export interface IExtensionField extends IField {
 
     /** Extended type */
     extend: string;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -506,6 +550,8 @@ export class MapField extends FieldBase {
      * @returns Decorator function
      */
     public static d<T extends { [key: string]: number | Long | string | boolean | Uint8Array | Buffer | number[] | Message<{}> }>(fieldId: number, fieldKeyType: ("int32"|"uint32"|"sint32"|"fixed32"|"sfixed32"|"int64"|"uint64"|"sint64"|"fixed64"|"sfixed64"|"bool"|"string"), fieldValueType: ("double"|"float"|"int32"|"uint32"|"sint32"|"fixed32"|"sfixed32"|"int64"|"uint64"|"sint64"|"fixed64"|"sfixed64"|"bool"|"string"|"bytes"|object|Constructor<{}>)): FieldDecorator;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Map field descriptor. */
@@ -513,6 +559,8 @@ export interface IMapField extends IField {
 
     /** Key type */
     keyType: string;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Extension map field descriptor. */
@@ -520,6 +568,8 @@ export interface IExtensionMapField extends IMapField {
 
     /** Extended type */
     extend: string;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Abstract runtime message. */
@@ -601,6 +651,8 @@ export class Message<T extends object = object> {
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Reflected service method. */
@@ -662,6 +714,8 @@ export class Method extends ReflectionObject {
      * @returns Method descriptor
      */
     public toJSON(toJSONOptions?: IToJSONOptions): IMethod;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Method descriptor. */
@@ -690,6 +744,8 @@ export interface IMethod {
 
     /** Method options properly parsed into an object */
     parsedOptions?: { [k: string]: any };
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Reflected namespace. */
@@ -734,6 +790,8 @@ export class Namespace extends NamespaceBase {
      * @returns `true` if reserved, otherwise `false`
      */
     public static isReservedName(reserved: ((number[]|string)[]|undefined), name: string): boolean;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Base class of all reflection objects containing nested objects. This is not an actual class but here for the sake of having consistent type definitions. */
@@ -859,6 +917,8 @@ export abstract class NamespaceBase extends ReflectionObject {
      * @throws {Error} If `path` does not point to a service
      */
     public lookupService(path: (string|string[])): Service;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Namespace descriptor. */
@@ -869,6 +929,8 @@ export interface INamespace {
 
     /** Nested object descriptors */
     nested?: { [k: string]: AnyNestedObject };
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Any extension field descriptor. */
@@ -978,6 +1040,8 @@ export abstract class ReflectionObject {
      * @returns Class name[, space, full name]
      */
     public toString(): string;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Reflected oneof. */
@@ -1037,6 +1101,8 @@ export class OneOf extends ReflectionObject {
      * @returns Decorator function
      */
     public static d<T extends string>(...fieldNames: string[]): OneOfDecorator;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Oneof descriptor. */
@@ -1047,6 +1113,8 @@ export interface IOneOf {
 
     /** Oneof options */
     options?: { [k: string]: any };
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -1081,6 +1149,8 @@ export interface IParserResult {
 
     /** Populated root instance */
     root: Root;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Options modifying the behavior of {@link parse}. */
@@ -1094,6 +1164,8 @@ export interface IParseOptions {
 
     /** Use trailing comment when both leading comment and trailing comment exist. */
     preferTrailingComment?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Options modifying the behavior of JSON serialization. */
@@ -1101,6 +1173,8 @@ export interface IToJSONOptions {
 
     /** Serializes comments. */
     keepComments?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -1241,6 +1315,8 @@ export class Reader {
      * @returns `this`
      */
     public skipType(wireType: number): Reader;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Wire format reader using node buffers. */
@@ -1257,6 +1333,8 @@ export class BufferReader extends Reader {
      * @returns Value read
      */
     public bytes(): Buffer;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Root namespace wrapping all types, enums, services, sub-namespaces etc. that belong together. */
@@ -1330,6 +1408,8 @@ export class Root extends NamespaceBase {
      * @throws {Error} If synchronous fetching is not supported (i.e. in browsers) or if a file's syntax is invalid
      */
     public loadSync(filename: (string|string[]), options?: IParseOptions): Root;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -1395,6 +1475,8 @@ export namespace rpc {
          * @returns `this`
          */
         public end(endedByRPC?: boolean): rpc.Service;
+
+        public $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 }
 
@@ -1454,6 +1536,8 @@ export class Service extends NamespaceBase {
      * @returns RPC service. Useful where requests and/or responses are streamed.
      */
     public create(rpcImpl: RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): rpc.Service;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Service descriptor. */
@@ -1461,6 +1545,8 @@ export interface IService extends INamespace {
 
     /** Method descriptors */
     methods: { [k: string]: IMethod };
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -1517,6 +1603,8 @@ export interface ITokenizerHandle {
 
     /** Current line number */
     line: number;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -1704,6 +1792,8 @@ export class Type extends NamespaceBase {
      * @returns Decorator function
      */
     public static d<T extends Message<T>>(typeName?: string): TypeDecorator<T>;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Message type descriptor. */
@@ -1723,6 +1813,8 @@ export interface IType extends INamespace {
 
     /** Whether a legacy group or not */
     group?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Conversion options as used by {@link Type#toObject} and {@link Message.toObject}. */
@@ -1763,6 +1855,8 @@ export interface IConversionOptions {
 
     /** Performs additional JSON compatibility conversions, i.e. NaN and Infinity to strings */
     json?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -1859,6 +1953,8 @@ export namespace types {
 /** Constructor type. */
 export interface Constructor<T> extends Function {
     new(...params: any[]): T; prototype: T;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Properties type. */
@@ -1869,6 +1965,8 @@ type Properties<T> = { [P in keyof T]?: T[P] };
  * This is a minimal stand-alone definition of a Buffer instance. The actual type is that exported by node's typings.
  */
 export interface Buffer extends Uint8Array {
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -1885,6 +1983,8 @@ export interface Long {
 
     /** Whether unsigned or not */
     unsigned: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -1982,6 +2082,8 @@ export namespace util {
          * @returns Length
          */
         public length(): number;
+
+        public $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Whether running within node or not. */
@@ -2109,6 +2211,8 @@ export namespace util {
 
         /** So far decoded message instance. */
         public instance: Message<T>;
+
+        public $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /**
@@ -2320,6 +2424,8 @@ export namespace util {
          * @returns `this`
          */
         public emit(evt: string, ...args: any[]): this;
+
+        public $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     /** Reads / writes floats / doubles from / to buffers. */
@@ -2519,6 +2625,8 @@ export interface IWrapper {
 
     /** To object converter */
     toObject?: WrapperToObjectConverter;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Wire format writer using `Uint8Array` if available, otherwise `Array`. */
@@ -2686,6 +2794,8 @@ export class Writer {
      * @returns Finished buffer
      */
     public finish(): Uint8Array;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /** Wire format writer using node buffers. */
@@ -2706,6 +2816,8 @@ export class BufferWriter extends Writer {
      * @returns Finished buffer
      */
     public finish(): Buffer;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**
@@ -2745,6 +2857,8 @@ export interface IFetchOptions {
 
     /** If `true`, forces the use of XMLHttpRequest */
     xhr?: boolean;
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 /**

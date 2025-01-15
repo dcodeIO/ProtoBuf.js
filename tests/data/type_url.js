@@ -65,8 +65,19 @@ $root.TypeUrlTest = (function() {
     TypeUrlTest.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        var fullyUnknown = [];
+        if (message.$unknownFields && $root.TypeUrlTest.decode)
+            for (var i = 0; i < message.$unknownFields.length; ++i)
+                try {
+                    var known = $root.TypeUrlTest.decode(message.$unknownFields[i]);
+                    fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                    message = Object.assign(known, message);
+                } catch (_) {
+                }
         if (message.nested != null && Object.hasOwnProperty.call(message, "nested"))
             $root.TypeUrlTest.Nested.encode(message.nested, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        for (var i = 0; i < fullyUnknown.length; ++i)
+            writer._unknownField(fullyUnknown[i]);
         return writer;
     };
 
@@ -99,13 +110,18 @@ $root.TypeUrlTest = (function() {
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new $root.TypeUrlTest();
         while (reader.pos < end) {
+            var unknownStartPos = reader.pos;
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.nested = $root.TypeUrlTest.Nested.decode(reader, reader.uint32());
-                break;
+            case 1: {
+                    message.nested = $root.TypeUrlTest.Nested.decode(reader, reader.uint32());
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
+                if (!message.$unknownFields)
+                    message.$unknownFields = [];
+                message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                 break;
             }
         }
@@ -269,8 +285,19 @@ $root.TypeUrlTest = (function() {
         Nested.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            var fullyUnknown = [];
+            if (message.$unknownFields && $root.TypeUrlTest.Nested.decode)
+                for (var i = 0; i < message.$unknownFields.length; ++i)
+                    try {
+                        var known = $root.TypeUrlTest.Nested.decode(message.$unknownFields[i]);
+                        fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                        message = Object.assign(known, message);
+                    } catch (_) {
+                    }
             if (message.a != null && Object.hasOwnProperty.call(message, "a"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.a);
+            for (var i = 0; i < fullyUnknown.length; ++i)
+                writer._unknownField(fullyUnknown[i]);
             return writer;
         };
 
@@ -303,13 +330,18 @@ $root.TypeUrlTest = (function() {
                 reader = $Reader.create(reader);
             var end = length === undefined ? reader.len : reader.pos + length, message = new $root.TypeUrlTest.Nested();
             while (reader.pos < end) {
+                var unknownStartPos = reader.pos;
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.a = reader.string();
-                    break;
+                case 1: {
+                        message.a = reader.string();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
+                    if (!message.$unknownFields)
+                        message.$unknownFields = [];
+                    message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                     break;
                 }
             }

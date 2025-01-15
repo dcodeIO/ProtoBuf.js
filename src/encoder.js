@@ -36,6 +36,21 @@ function encoder(mtype) {
     // "when a message is serialized its known fields should be written sequentially by field number"
     var fields = /* initializes */ mtype.fieldsArray.slice().sort(util.compareFieldsById);
 
+    var unknownRef = "m" + util.safeProp("$unknownFields");
+
+    // Redecode unknown fields and apply them to the message before encoding
+    gen
+    ("var fullyUnknown=[]")
+    ("if(%s&&this.ctor.decode) {", unknownRef)
+      ("for(var i=0;i<%s.length;++i) {", unknownRef)
+        ("try {")
+          ("var known=this.ctor.decode(%s[i])", unknownRef)
+          ("fullyUnknown=fullyUnknown.concat(known.$unknownFields||[])")
+          ("m=Object.assign(known,m)")
+        ("}catch(_){}")
+      ("}")
+    ("}");
+
     for (var i = 0; i < fields.length; ++i) {
         var field    = fields[i].resolve(),
             index    = mtype._fieldsArray.indexOf(field),
@@ -93,6 +108,11 @@ function encoder(mtype) {
 
         }
     }
+
+    gen
+    ("for(var i=0;i<fullyUnknown.length;++i) {")
+        ("w._unknownField(fullyUnknown[i])")
+    ("}");
 
     return gen
     ("return w");

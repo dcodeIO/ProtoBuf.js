@@ -1,0 +1,11 @@
+message MessageV1 {
+  optional int32 field1 = 1;
+}
+
+message MessageV2 {
+  optional int32 field1 = 1;
+
+  /* New fields */
+  optional bool field2 = 2;
+  optional string field3 = 3;
+}

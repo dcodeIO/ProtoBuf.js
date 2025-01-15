@@ -215,6 +215,15 @@ $root.Package = (function() {
     Package.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        var fullyUnknown = [];
+        if (message.$unknownFields && $root.Package.decode)
+            for (var i = 0; i < message.$unknownFields.length; ++i)
+                try {
+                    var known = $root.Package.decode(message.$unknownFields[i]);
+                    fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                    message = Object.assign(known, message);
+                } catch (_) {
+                }
         if (message.name != null && Object.hasOwnProperty.call(message, "name"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
         if (message.version != null && Object.hasOwnProperty.call(message, "version"))
@@ -255,6 +264,8 @@ $root.Package = (function() {
                 writer.uint32(/* id 18, wireType 2 =*/146).string(message.cliDependencies[i]);
         if (message.versionScheme != null && Object.hasOwnProperty.call(message, "versionScheme"))
             writer.uint32(/* id 19, wireType 2 =*/154).string(message.versionScheme);
+        for (var i = 0; i < fullyUnknown.length; ++i)
+            writer._unknownField(fullyUnknown[i]);
         return writer;
     };
 
@@ -287,141 +298,162 @@ $root.Package = (function() {
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Package(), key, value;
         while (reader.pos < end) {
+            var unknownStartPos = reader.pos;
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.name = reader.string();
-                break;
-            case 2:
-                message.version = reader.string();
-                break;
-            case 19:
-                message.versionScheme = reader.string();
-                break;
-            case 3:
-                message.description = reader.string();
-                break;
-            case 4:
-                message.author = reader.string();
-                break;
-            case 5:
-                message.license = reader.string();
-                break;
-            case 6:
-                message.repository = $root.Package.Repository.decode(reader, reader.uint32());
-                break;
-            case 7:
-                message.bugs = reader.string();
-                break;
-            case 8:
-                message.homepage = reader.string();
-                break;
-            case 9:
-                if (!(message.keywords && message.keywords.length))
-                    message.keywords = [];
-                message.keywords.push(reader.string());
-                break;
-            case 10:
-                message.main = reader.string();
-                break;
-            case 11:
-                if (message.bin === $util.emptyObject)
-                    message.bin = {};
-                var end2 = reader.uint32() + reader.pos;
-                key = "";
-                value = "";
-                while (reader.pos < end2) {
-                    var tag2 = reader.uint32();
-                    switch (tag2 >>> 3) {
-                    case 1:
-                        key = reader.string();
-                        break;
-                    case 2:
-                        value = reader.string();
-                        break;
-                    default:
-                        reader.skipType(tag2 & 7);
-                        break;
-                    }
+            case 1: {
+                    message.name = reader.string();
+                    break;
                 }
-                message.bin[key] = value;
-                break;
-            case 12:
-                if (message.scripts === $util.emptyObject)
-                    message.scripts = {};
-                var end2 = reader.uint32() + reader.pos;
-                key = "";
-                value = "";
-                while (reader.pos < end2) {
-                    var tag2 = reader.uint32();
-                    switch (tag2 >>> 3) {
-                    case 1:
-                        key = reader.string();
-                        break;
-                    case 2:
-                        value = reader.string();
-                        break;
-                    default:
-                        reader.skipType(tag2 & 7);
-                        break;
-                    }
+            case 2: {
+                    message.version = reader.string();
+                    break;
                 }
-                message.scripts[key] = value;
-                break;
-            case 13:
-                if (message.dependencies === $util.emptyObject)
-                    message.dependencies = {};
-                var end2 = reader.uint32() + reader.pos;
-                key = "";
-                value = "";
-                while (reader.pos < end2) {
-                    var tag2 = reader.uint32();
-                    switch (tag2 >>> 3) {
-                    case 1:
-                        key = reader.string();
-                        break;
-                    case 2:
-                        value = reader.string();
-                        break;
-                    default:
-                        reader.skipType(tag2 & 7);
-                        break;
-                    }
+            case 19: {
+                    message.versionScheme = reader.string();
+                    break;
                 }
-                message.dependencies[key] = value;
-                break;
-            case 15:
-                if (message.devDependencies === $util.emptyObject)
-                    message.devDependencies = {};
-                var end2 = reader.uint32() + reader.pos;
-                key = "";
-                value = "";
-                while (reader.pos < end2) {
-                    var tag2 = reader.uint32();
-                    switch (tag2 >>> 3) {
-                    case 1:
-                        key = reader.string();
-                        break;
-                    case 2:
-                        value = reader.string();
-                        break;
-                    default:
-                        reader.skipType(tag2 & 7);
-                        break;
-                    }
+            case 3: {
+                    message.description = reader.string();
+                    break;
                 }
-                message.devDependencies[key] = value;
-                break;
-            case 17:
-                message.types = reader.string();
-                break;
-            case 18:
-                if (!(message.cliDependencies && message.cliDependencies.length))
-                    message.cliDependencies = [];
-                message.cliDependencies.push(reader.string());
-                break;
+            case 4: {
+                    message.author = reader.string();
+                    break;
+                }
+            case 5: {
+                    message.license = reader.string();
+                    break;
+                }
+            case 6: {
+                    message.repository = $root.Package.Repository.decode(reader, reader.uint32());
+                    break;
+                }
+            case 7: {
+                    message.bugs = reader.string();
+                    break;
+                }
+            case 8: {
+                    message.homepage = reader.string();
+                    break;
+                }
+            case 9: {
+                    if (!(message.keywords && message.keywords.length))
+                        message.keywords = [];
+                    message.keywords.push(reader.string());
+                    break;
+                }
+            case 10: {
+                    message.main = reader.string();
+                    break;
+                }
+            case 11: {
+                    if (message.bin === $util.emptyObject)
+                        message.bin = {};
+                    var end2 = reader.uint32() + reader.pos;
+                    key = "";
+                    value = "";
+                    while (reader.pos < end2) {
+                        var tag2 = reader.uint32();
+                        switch (tag2 >>> 3) {
+                        case 1:
+                            key = reader.string();
+                            break;
+                        case 2:
+                            value = reader.string();
+                            break;
+                        default:
+                            reader.skipType(tag2 & 7);
+                            break;
+                        }
+                    }
+                    message.bin[key] = value;
+                    break;
+                }
+            case 12: {
+                    if (message.scripts === $util.emptyObject)
+                        message.scripts = {};
+                    var end2 = reader.uint32() + reader.pos;
+                    key = "";
+                    value = "";
+                    while (reader.pos < end2) {
+                        var tag2 = reader.uint32();
+                        switch (tag2 >>> 3) {
+                        case 1:
+                            key = reader.string();
+                            break;
+                        case 2:
+                            value = reader.string();
+                            break;
+                        default:
+                            reader.skipType(tag2 & 7);
+                            break;
+                        }
+                    }
+                    message.scripts[key] = value;
+                    break;
+                }
+            case 13: {
+                    if (message.dependencies === $util.emptyObject)
+                        message.dependencies = {};
+                    var end2 = reader.uint32() + reader.pos;
+                    key = "";
+                    value = "";
+                    while (reader.pos < end2) {
+                        var tag2 = reader.uint32();
+                        switch (tag2 >>> 3) {
+                        case 1:
+                            key = reader.string();
+                            break;
+                        case 2:
+                            value = reader.string();
+                            break;
+                        default:
+                            reader.skipType(tag2 & 7);
+                            break;
+                        }
+                    }
+                    message.dependencies[key] = value;
+                    break;
+                }
+            case 15: {
+                    if (message.devDependencies === $util.emptyObject)
+                        message.devDependencies = {};
+                    var end2 = reader.uint32() + reader.pos;
+                    key = "";
+                    value = "";
+                    while (reader.pos < end2) {
+                        var tag2 = reader.uint32();
+                        switch (tag2 >>> 3) {
+                        case 1:
+                            key = reader.string();
+                            break;
+                        case 2:
+                            value = reader.string();
+                            break;
+                        default:
+                            reader.skipType(tag2 & 7);
+                            break;
+                        }
+                    }
+                    message.devDependencies[key] = value;
+                    break;
+                }
+            case 17: {
+                    message.types = reader.string();
+                    break;
+                }
+            case 18: {
+                    if (!(message.cliDependencies && message.cliDependencies.length))
+                        message.cliDependencies = [];
+                    message.cliDependencies.push(reader.string());
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
+                if (!message.$unknownFields)
+                    message.$unknownFields = [];
+                message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                 break;
             }
         }
@@ -804,10 +836,21 @@ $root.Package = (function() {
         Repository.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            var fullyUnknown = [];
+            if (message.$unknownFields && $root.Package.Repository.decode)
+                for (var i = 0; i < message.$unknownFields.length; ++i)
+                    try {
+                        var known = $root.Package.Repository.decode(message.$unknownFields[i]);
+                        fullyUnknown = fullyUnknown.concat(known.$unknownFields || []);
+                        message = Object.assign(known, message);
+                    } catch (_) {
+                    }
             if (message.type != null && Object.hasOwnProperty.call(message, "type"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.type);
             if (message.url != null && Object.hasOwnProperty.call(message, "url"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.url);
+            for (var i = 0; i < fullyUnknown.length; ++i)
+                writer._unknownField(fullyUnknown[i]);
             return writer;
         };
 
@@ -840,16 +883,22 @@ $root.Package = (function() {
                 reader = $Reader.create(reader);
             var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Package.Repository();
             while (reader.pos < end) {
+                var unknownStartPos = reader.pos;
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.type = reader.string();
-                    break;
-                case 2:
-                    message.url = reader.string();
-                    break;
+                case 1: {
+                        message.type = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.url = reader.string();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
+                    if (!message.$unknownFields)
+                        message.$unknownFields = [];
+                    message.$unknownFields.push(reader.buf.slice(unknownStartPos, reader.pos));
                     break;
                 }
             }

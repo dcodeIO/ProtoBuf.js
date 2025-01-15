@@ -1,4 +1,5 @@
 **/node_modules/*
+bench/data/static_pbjs.js
 bin/*
 cli/wrappers/*
 coverage/*

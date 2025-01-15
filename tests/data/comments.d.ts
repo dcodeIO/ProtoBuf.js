@@ -1,8 +1,11 @@
 import * as $protobuf from "../..";
+import Long = require("long");
 export interface ITest1 {
     field1?: (string|null);
     field2?: (number|null);
     field3?: (boolean|null);
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export class Test1 implements ITest1 {
@@ -20,9 +23,13 @@ export class Test1 implements ITest1 {
     public static toObject(message: Test1, options?: $protobuf.IConversionOptions): { [k: string]: any };
     public toJSON(): { [k: string]: any };
     public static getTypeUrl(typeUrlPrefix?: string): string;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export interface ITest2 {
+
+    $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export class Test2 implements ITest2 {
@@ -37,6 +44,8 @@ export class Test2 implements ITest2 {
     public static toObject(message: Test2, options?: $protobuf.IConversionOptions): { [k: string]: any };
     public toJSON(): { [k: string]: any };
     public static getTypeUrl(typeUrlPrefix?: string): string;
+
+    public $unknownFields?: ReadonlyArray<Uint8Array>;
 }
 
 export enum Test3 {

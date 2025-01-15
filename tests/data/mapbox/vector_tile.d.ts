@@ -1,10 +1,11 @@
 import * as $protobuf from "../../..";
-import Long from "long";
-
+import Long = require("long");
 export namespace vector_tile {
 
     interface ITile {
         layers?: (vector_tile.Tile.ILayer[]|null);
+
+        $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     class Tile implements ITile {
@@ -20,6 +21,8 @@ export namespace vector_tile {
         public static toObject(message: vector_tile.Tile, options?: $protobuf.IConversionOptions): { [k: string]: any };
         public toJSON(): { [k: string]: any };
         public static getTypeUrl(typeUrlPrefix?: string): string;
+
+        public $unknownFields?: ReadonlyArray<Uint8Array>;
     }
 
     namespace Tile {
@@ -39,6 +42,8 @@ export namespace vector_tile {
             uintValue?: (number|Long|null);
             sintValue?: (number|Long|null);
             boolValue?: (boolean|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class Value implements IValue {
@@ -60,6 +65,8 @@ export namespace vector_tile {
             public static toObject(message: vector_tile.Tile.Value, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface IFeature {
@@ -67,6 +74,8 @@ export namespace vector_tile {
             tags?: (number[]|null);
             type?: (vector_tile.Tile.GeomType|null);
             geometry?: (number[]|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class Feature implements IFeature {
@@ -85,6 +94,8 @@ export namespace vector_tile {
             public static toObject(message: vector_tile.Tile.Feature, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         interface ILayer {
@@ -94,6 +105,8 @@ export namespace vector_tile {
             keys?: (string[]|null);
             values?: (vector_tile.Tile.IValue[]|null);
             extent?: (number|null);
+
+            $unknownFields?: ReadonlyArray<Uint8Array>;
         }
 
         class Layer implements ILayer {
@@ -114,6 +127,8 @@ export namespace vector_tile {
             public static toObject(message: vector_tile.Tile.Layer, options?: $protobuf.IConversionOptions): { [k: string]: any };
             public toJSON(): { [k: string]: any };
             public static getTypeUrl(typeUrlPrefix?: string): string;
+
+            public $unknownFields?: ReadonlyArray<Uint8Array>;
         }
     }
 }

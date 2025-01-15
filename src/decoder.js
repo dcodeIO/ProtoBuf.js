@@ -21,12 +21,15 @@ function decoder(mtype) {
         ("r=Reader.create(r)")
     ("var c=l===undefined?r.len:r.pos+l,m=new this.ctor" + (mtype.fieldsArray.filter(function(field) { return field.map; }).length ? ",k,value" : ""))
     ("while(r.pos<c){")
+        ("var unknownStartPos = r.pos")
         ("var t=r.uint32()");
     if (mtype.group) gen
         ("if((t&7)===4)")
             ("break");
     gen
         ("switch(t>>>3){");
+
+    var unknownRef = "m" + util.safeProp("$unknownFields");
 
     var i = 0;
     for (; i < /* initializes */ mtype.fieldsArray.length; ++i) {
@@ -110,6 +113,11 @@ function decoder(mtype) {
     } gen
             ("default:")
                 ("r.skipType(t&7)")
+                ("if (!(%s)) {", unknownRef)
+                    ("%s = []", unknownRef)
+                ("}")
+
+                ("%s.push(r.buf.slice(unknownStartPos, r.pos))", unknownRef)
                 ("break")
 
         ("}")
