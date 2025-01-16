@@ -221,6 +221,17 @@ Field.prototype.setOption = function setOption(name, value, ifNotSet) {
     return ReflectionObject.prototype.setOption.call(this, name, value, ifNotSet);
 };
 
+Field.prototype.applyJsonName = function applyJsonName() {
+    if (this.parsedOptions !== null) {
+        var opt = this.parsedOptions.find(function (opt) {
+            return Object.prototype.hasOwnProperty.call(opt, "json_name");
+        });
+        if (opt) {
+            this.name = opt["json_name"];
+        }
+    }
+};
+
 /**
  * Field descriptor.
  * @interface IField

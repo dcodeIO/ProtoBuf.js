@@ -61,6 +61,7 @@ extend google.protobuf.MethodOptions {
 message TestFieldOptionsMsg {
     string field1 = 1 [(fo_rep_msg) = {value: 1 rep_value: 2 rep_value: 3}, (fo_rep_msg) = {value: 4 rep_value: 5 rep_value: 6}];
     string field2 = 2 [(fo_single_msg).value = 7, (fo_single_msg).rep_value = 8, (fo_single_msg).rep_value = 9];
+    string field3 = 3 [json_name = "Field_Three"];
 }
 
 message TestMessageOptionsMsg {

@@ -45,7 +45,7 @@
     "prof": "node bench/prof",
     "test": "npm run test:sources && npm run test:types",
     "test:sources": "tape -r ./lib/tape-adapter tests/*.js tests/node/*.js",
-    "test:types": "tsc tests/comp_typescript.ts --lib es2015 --esModuleInterop --strictNullChecks --experimentalDecorators --emitDecoratorMetadata && tsc tests/data/test.js.ts --lib es2015 --esModuleInterop --noEmit --strictNullChecks && tsc tests/data/*.ts --lib es2015 --esModuleInterop --noEmit --strictNullChecks",
+    "test:types": "tsc tests/comp_typescript.ts --lib es2015 --esModuleInterop --strictNullChecks --experimentalDecorators --emitDecoratorMetadata && tsc tests/data/test.js.ts --lib es2015 --esModuleInterop --noEmit --strictNullChecks && tsc --project tests/data/all_files.tsconfig.json --lib es2015 --esModuleInterop --noEmit --strictNullChecks",
     "make": "npm run lint:sources && npm run build && npm run lint:types && node ./scripts/gentests.js && npm test"
   },
   "dependencies": {

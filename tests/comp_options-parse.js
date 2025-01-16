@@ -32,6 +32,8 @@ tape.test("Options", function (test) {
         test.equal(TestFieldOptionsMsg.fields.field2.options["(fo_single_msg).value"], 7, "should correctly parse single msg option");
         test.equal(TestFieldOptionsMsg.fields.field2.options["(fo_single_msg).rep_value"], 9, "should take second repeated int in single msg option");
         test.same(TestFieldOptionsMsg.fields.field2.parsedOptions, [{"(fo_single_msg)": {value: 7, rep_value: [8,9]}}], "should take all repeated message option");
+        test.equal(TestFieldOptionsMsg.fields.Field_Three.options["json_name"], "Field_Three", "should correctly parse json_name option");
+        test.equal(TestFieldOptionsMsg.fields.field3, undefined, "json_name option should change field name");
         test.end();
     });
 

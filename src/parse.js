@@ -451,6 +451,8 @@ function parse(source, root, options) {
             parseInlineOptions(field);
         });
 
+        field.applyJsonName();
+
         if (rule === "proto3_optional") {
             // for proto3 optional fields, we create a single-member Oneof to mimic "optional" behavior
             var oneof = new OneOf("_" + name);
