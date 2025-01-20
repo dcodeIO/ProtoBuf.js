@@ -225,8 +225,8 @@ Namespace.prototype.add = function add(object) {
     else {
         var prev = this.get(object.name);
         if (prev) {
-            if (prev instanceof Namespace && object instanceof Namespace && !(prev instanceof Type || prev instanceof Service)) {
-                // replace plain namespace but keep existing nested elements and options
+            if (prev instanceof Namespace && object instanceof Namespace && !(prev instanceof Service)) {
+                // replace plain namespace or type, but keep existing nested elements and options
                 var nested = prev.nestedArray;
                 for (var i = 0; i < nested.length; ++i)
                     object.add(nested[i]);

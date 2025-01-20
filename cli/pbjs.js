@@ -263,10 +263,16 @@ exports.main = function main(args, callback) {
         if (tobj.fieldsArray)
             tobj.fieldsArray.forEach(function(fobj) {
                 fobj.referenced = true;
+                var type = fobj.resolvedType;
+                if (type && !type.referenced)
+                    markReferenced(type);
             });
         if (tobj.oneofsArray)
             tobj.oneofsArray.forEach(function(oobj) {
                 oobj.referenced = true;
+                var type = oobj.resolvedType;
+                if (type && !type.referenced)
+                    markReferenced(type);
             });
         // also mark an extension field's extended type, but not its (other) fields
         if (tobj.extensionField)
@@ -298,7 +304,6 @@ exports.main = function main(args, callback) {
                 if (hasReferenced) { // replace with plain namespace if a namespace subclass
                     if (obj instanceof protobuf.Type || obj instanceof protobuf.Service) {
                         var robj = new protobuf.Namespace(obj.name, obj.options);
-                        robj.nested = obj.nested;
                         parent.add(robj);
                     }
                 } else // remove completely if nothing inside is referenced
