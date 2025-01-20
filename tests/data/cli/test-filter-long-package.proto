@@ -1,0 +1,21 @@
+package filtertest.more.parts;
+import "./test-filter-import.proto";
+
+message NeedMessage1 {
+  optional uint32 test1 = 1;
+  optional NeedMessage2 needMessage2 = 2;
+  optional DependentMessage1 dependentMessage1 = 3;
+  optional DependentMessageFromImport dependentMessage2 = 4;
+}
+
+message NeedMessage2 {
+  optional uint32 test1 = 1;
+}
+
+message DependentMessage1 {
+  optional uint32 test1 = 1;
+}
+
+message NotNeedMessageInRootFile {
+  optional uint32 test1 = 1;
+}

@@ -5,6 +5,7 @@ var path     = require("path"),
     chalk    = require("chalk"),
     pkg      = require("./package.json"),
     util     = require("./util"),
+    filter   = require("./filter"),
     glob     = require("glob"),
     protobuf = require("protobufjs");
 
@@ -317,8 +318,8 @@ exports.main = function main(args, callback) {
         if (argv.filter) {
             // This is a piece of degradable logic
             try {
-                const needMessage = JSON.parse(fs.readFileSync(argv.filter));
-                util.filterMessage(root, needMessage);
+                const filterParams = JSON.parse(fs.readFileSync(argv.filter));
+                filter.filterMessage(root, filterParams);
             } catch (error) {
                 process.stderr.write(`The filter not work, please check whether the file is correct: ${error.message}\n`);
             }
