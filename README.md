@@ -479,6 +479,8 @@ The library ships with its own [type definitions](https://github.com/protobufjs/
 
 The npm package depends on [@types/node](https://www.npmjs.com/package/@types/node) because of `Buffer` and [@types/long](https://www.npmjs.com/package/@types/long) because of `Long`. If you are not building for node and/or not using long.js, it should be safe to exclude them manually.
 
+To generate type definitions for your proto files you can use the [cli](https://github.com/protobufjs/protobuf.js/tree/56b1e64979dae757b67a21d326e16acee39f2267/cli).
+
 #### Using the JS API
 
 The API shown above works pretty much the same with TypeScript. However, because everything is typed, accessing fields on instances of dynamically generated message classes requires either using bracket-notation (i.e. `message["awesomeField"]`) or explicit casts. Alternatively, it is possible to use a [typings file generated for its static counterpart](#pbts-for-typescript).
