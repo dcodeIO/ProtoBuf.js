@@ -319,12 +319,18 @@ Root.prototype._handleAdd = function _handleAdd(object) {
 
     } else if (!(object instanceof OneOf)) /* everything else is a namespace */ {
 
-        if (object instanceof Type) // Try to handle any deferred extensions
+        if (object instanceof Type) { // Try to handle any deferred extensions
+            if (!object.parent.orderedNestedMessages) {
+              object.parent.orderedNestedMessages = [];
+            }
+            object.parent.orderedNestedMessages.push(object);
+
             for (var i = 0; i < this.deferred.length;)
                 if (tryHandleExtension(this, this.deferred[i]))
                     this.deferred.splice(i, 1);
                 else
                     ++i;
+        }
         for (var j = 0; j < /* initializes */ object.nestedArray.length; ++j) // recurse into the namespace
             this._handleAdd(object._nestedArray[j]);
         if (exposeRe.test(object.name))

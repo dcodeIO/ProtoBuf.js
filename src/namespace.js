@@ -108,6 +108,12 @@ function Namespace(name, options) {
      * @private
      */
     this._nestedArray = null;
+
+    /**
+     * Array of nested messages in the order they were parsed from the schema.
+     * @type {ReflectionObject[]}
+     */
+    this.orderedNestedMessages = null;
 }
 
 function clearCache(namespace) {
@@ -239,6 +245,7 @@ Namespace.prototype.add = function add(object) {
                 throw Error("duplicate name '" + object.name + "' in " + this);
         }
     }
+
     this.nested[object.name] = object;
     object.onAdd(this);
     return clearCache(this);
