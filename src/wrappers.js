@@ -100,3 +100,93 @@ wrappers[".google.protobuf.Any"] = {
         return this.toObject(message, options);
     }
 };
+
+// Custom wrapper for ListValue
+wrappers[".google.protobuf.ListValue"] = {
+    fromObject: function(object) {
+        var Value = this.lookup("google.protobuf.Value");
+        return this.create({values: object.map(Value.fromObject)});
+    },
+
+    toObject: function(message /*, options */) {
+        var Value = this.lookup("google.protobuf.Value");
+        return message.values.map(Value.toObject);
+    }
+};
+
+// Custom wrapper for Value
+wrappers[".google.protobuf.Value"] = {
+    // given a plain javascript scalar or object, return a protobuf Value
+    fromObject: function(object) {
+        var Struct = this.lookup("google.protobuf.Struct");
+        var NullValue = this.lookup("google.protobuf.NullValue");
+        var ListValue = this.lookup("google.protobuf.ListValue");
+
+        var valueDef;
+        if (object === null) {
+            valueDef = {nullValue: NullValue.values.NULL_VALUE};
+        } else if (typeof object === "number") {
+            valueDef = {numberValue: object};
+        } else if (typeof object === "string") {
+            valueDef = {stringValue: object};
+        } else if (typeof object === "boolean") {
+            valueDef = {boolValue: object};
+        } else if (Array.isArray(object)) {
+            valueDef = {listValue: ListValue.fromObject(object)};
+        } else if (typeof object === "object") {
+            valueDef = {structValue: Struct.fromObject(object)};
+        } else {
+            return valueDef = {nullValue: 0};
+        }
+        return this.create(valueDef);
+    },
+
+    toObject: function(message, options) {
+        var Struct = this.lookup("google.protobuf.Struct");
+        var ListValue = this.lookup("google.protobuf.ListValue");
+
+        var object;
+        if (message.kind === "nullValue") {
+            object = null;
+        } else if (message.kind === "numberValue") {
+            object = message.numberValue;
+        } else if (message.kind === "stringValue") {
+            object = message.stringValue;
+        } else if (message.kind === "boolValue") {
+            object = message.boolValue;
+        } else if (message.kind === "structValue") {
+            object = Struct.toObject(message.structValue, options);
+        } else if (message.kind === "listValue") {
+            object = ListValue.toObject(message.listValue, options);
+        }
+
+        return object;
+    }
+};
+
+// Custom wrapper for Struct
+wrappers[".google.protobuf.Struct"] = {
+
+    // given a plain javascript object, return a protobuf Struct object
+    fromObject: function(object) {
+        var Value = this.lookup("google.protobuf.Value");
+        var structDef = {fields: {}};
+
+        Object.keys(object).forEach(function (k) {
+            structDef.fields[k] = Value.fromObject(object[k]);
+        });
+        return this.create(structDef);
+    },
+
+    // given a protobuf Struct object, return a plain JS object
+    toObject: function(message, options) {
+        var Value = this.lookup("google.protobuf.Value");
+        var object = {};
+        var fields = message.fields;
+
+        Object.keys(fields).forEach(function (k) {
+            object[k] = Value.toObject(fields[k], options);
+        });
+        return object;
+    }
+};
