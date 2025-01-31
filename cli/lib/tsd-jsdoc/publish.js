@@ -135,6 +135,7 @@ function writeln() {
 }
 
 var keepTags = [
+    "deprecated",
     "param",
     "returns",
     "throws",
